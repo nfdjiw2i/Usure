@@ -1,19 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru">
-
+<html lang="en">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>USURE</title>
 
 <style>
-
 * {
     box-sizing: border-box;
 }
@@ -21,142 +14,87 @@
 html,
 body {
     margin: 0;
+    padding: 0;
+    width: 100%;
     min-height: 100%;
-
-    background: #080808;
-
-    color: #eeeeee;
-
+    background: #050505;
+    color: #fff;
     font-family:
+        Inter,
         Arial,
         Helvetica,
         sans-serif;
 }
 
 body {
-
     display: flex;
-
     justify-content: center;
-
-    padding: 60px 20px;
+    padding: 45px 20px;
 }
 
-.app {
-
-    width: 920px;
-
-    max-width: 100%;
+.container {
+    width: 100%;
+    max-width: 1050px;
 }
-
-
-/* HEADER */
 
 .header {
-
-    height: 62px;
-
     display: flex;
-
+    justify-content: space-between;
     align-items: center;
-
-    padding: 0 20px;
-
-    background: #111111;
-
-    border: 1px solid #2d2d2d;
+    border-bottom: 1px solid #252525;
+    padding-bottom: 18px;
+    margin-bottom: 25px;
 }
 
 .logo {
-
-    font-size: 15px;
-
+    font-size: 25px;
     font-weight: 700;
-
-    letter-spacing: 4px;
+    letter-spacing: 5px;
 }
 
 .status {
-
-    margin-left: auto;
-
-    color: #777777;
-
-    font-size: 10px;
-
-    letter-spacing: 1.5px;
-}
-
-.status::before {
-
-    content: "";
-
-    display: inline-block;
-
-    width: 6px;
-
-    height: 6px;
-
-    margin-right: 7px;
-
-    background: #888888;
-}
-
-
-/* PANEL */
-
-.panel {
-
-    margin-top: 16px;
-
-    background: #101010;
-
-    border: 1px solid #292929;
-}
-
-.title {
-
-    height: 45px;
-
     display: flex;
-
     align-items: center;
+    gap: 8px;
+    color: #aaa;
+    font-size: 12px;
+    letter-spacing: 2px;
+}
 
-    padding: 0 17px;
+.status-dot {
+    width: 7px;
+    height: 7px;
+    background: #fff;
+    border-radius: 50%;
+}
 
-    border-bottom: 1px solid #292929;
+.card {
+    background: #0b0b0b;
+    border: 1px solid #292929;
+    padding: 22px;
+    margin-bottom: 18px;
+}
 
-    color: #777777;
-
-    font-size: 10px;
-
-    letter-spacing: 1.5px;
-
+.label {
+    color: #999;
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
     text-transform: uppercase;
 }
 
-
-/* SOURCE */
-
-#source {
-
-    display: block;
-
+textarea {
     width: 100%;
-
-    height: 450px;
-
+    min-height: 330px;
     resize: vertical;
 
-    padding: 18px;
+    background: #050505;
+    color: #fff;
 
+    border: 1px solid #303030;
     outline: none;
 
-    border: none;
-
-    background: #090909;
-
-    color: #eeeeee;
+    padding: 17px;
 
     font-family:
         Consolas,
@@ -164,434 +102,446 @@ body {
         monospace;
 
     font-size: 14px;
+    line-height: 1.6;
 
-    line-height: 1.65;
-
-    tab-size: 4;
+    transition: border-color .15s ease;
 }
 
-#source::placeholder {
-
-    color: #444444;
+textarea:focus {
+    border-color: #666;
 }
-
-
-/* BUTTONS */
 
 .buttons {
-
     display: flex;
-
     gap: 10px;
-
-    padding: 13px;
-
-    border-top: 1px solid #292929;
-
-    background: #111111;
+    margin-top: 14px;
 }
 
 button {
+    border: 1px solid #444;
+    background: #111;
+    color: #fff;
 
-    height: 43px;
-
-    border: 1px solid #777777;
-
-    background: #e8e8e8;
-
-    color: #080808;
-
-    font-size: 11px;
-
-    font-weight: 700;
-
-    letter-spacing: 1px;
+    padding: 12px 20px;
 
     cursor: pointer;
-}
 
-#create {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
 
-    flex: 1;
-}
-
-#clear {
-
-    width: 110px;
-
-    background: #151515;
-
-    border-color: #333333;
-
-    color: #999999;
+    transition:
+        background .15s ease,
+        border-color .15s ease;
 }
 
 button:hover {
-
-    background: #ffffff;
+    background: #1b1b1b;
+    border-color: #666;
 }
 
-#clear:hover {
+button:active {
+    background: #222;
+}
 
-    background: #1d1d1d;
+button.primary {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
 
-    color: #ffffff;
+button.primary:hover {
+    background: #ddd;
 }
 
 button:disabled {
-
     opacity: .45;
-
-    cursor: default;
+    cursor: not-allowed;
 }
-
-
-/* RESULT */
 
 .result {
-
     display: none;
-
-    margin-top: 16px;
-
-    background: #101010;
-
-    border: 1px solid #292929;
 }
 
-.result-title {
-
-    padding: 14px 17px;
-
-    border-bottom: 1px solid #292929;
-
-    color: #777777;
-
-    font-size: 10px;
-
-    letter-spacing: 1.5px;
-
-    text-transform: uppercase;
-}
-
-.result-body {
-
-    padding: 17px;
-}
-
-#loader {
-
+.result.visible {
     display: block;
+}
 
-    width: 100%;
+.code-box {
+    position: relative;
+}
 
-    min-height: 190px;
+pre {
+    margin: 0;
 
-    resize: vertical;
+    white-space: pre-wrap;
+    word-break: break-word;
 
-    padding: 15px;
+    background: #050505;
+    border: 1px solid #303030;
 
-    outline: none;
+    padding: 18px;
 
-    border: 1px solid #292929;
-
-    background: #080808;
-
-    color: #dddddd;
+    color: #ddd;
 
     font-family:
         Consolas,
         "Courier New",
         monospace;
 
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 1.55;
 
-    line-height: 1.6;
+    max-height: 500px;
+    overflow: auto;
 }
 
-#copy {
-
-    width: 100%;
-
-    margin-top: 12px;
+.copy-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
 }
 
 .info {
-
-    display: flex;
-
-    gap: 25px;
-
-    margin-top: 12px;
-
-    color: #666666;
-
-    font-family:
-        Consolas,
-        monospace;
-
-    font-size: 11px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 18px;
 }
 
+.info-item {
+    border: 1px solid #252525;
+    background: #080808;
+    padding: 14px;
+}
 
-/* ERROR */
+.info-name {
+    color: #777;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+}
 
-#error {
+.info-value {
+    color: #fff;
+    font-family: monospace;
+    font-size: 13px;
+}
 
+.error {
     display: none;
 
-    margin-top: 16px;
+    border: 1px solid #4a2424;
+    background: #110707;
+
+    color: #ffbaba;
 
     padding: 14px;
 
-    background: #101010;
+    margin-top: 15px;
 
-    border: 1px solid #333333;
-
-    color: #aaaaaa;
-
+    font-family: monospace;
     font-size: 12px;
+
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
+.error.visible {
+    display: block;
+}
 
-@media(max-width:600px) {
+.footer {
+    color: #555;
+    text-align: center;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 25px;
+}
 
+@media (max-width: 650px) {
     body {
-        padding: 20px 10px;
+        padding: 20px 12px;
     }
 
-    #source {
-        height: 380px;
+    .header {
+        align-items: flex-start;
+    }
+
+    .info {
+        grid-template-columns: 1fr;
     }
 
     .buttons {
         flex-direction: column;
     }
 
-    #create,
-    #clear {
+    button {
         width: 100%;
     }
 }
-
 </style>
-
 </head>
 
 <body>
 
-
-<div class="app">
-
+<div class="container">
 
     <div class="header">
-
-        <div class="logo">
-            USURE
-        </div>
+        <div class="logo">USURE</div>
 
         <div class="status">
+            <span class="status-dot"></span>
             ONLINE
         </div>
-
     </div>
 
+    <div class="card">
 
-    <div class="panel">
-
-
-        <div class="title">
-            LOCAL SCRIPT
+        <div class="label">
+            Local Script
         </div>
 
-
-<textarea
-    id="source"
-    spellcheck="false"
-    autocomplete="off"
-    autocorrect="off"
-    autocapitalize="off"
-    placeholder='print("Hello")
-print("World")'></textarea>
-
+        <textarea
+            id="code"
+            spellcheck="false"
+            placeholder="Paste your code here..."></textarea>
 
         <div class="buttons">
 
-            <button id="clear">
+            <button id="clearBtn">
                 CLEAR
             </button>
 
-            <button id="create">
+            <button
+                id="createBtn"
+                class="primary">
                 CREATE REQUEST
             </button>
 
         </div>
 
+        <div
+            id="error"
+            class="error"></div>
 
     </div>
 
 
     <div
-        class="result"
         id="result"
-    >
+        class="card result">
 
-        <div class="result-title">
-            GENERATED LOCAL SCRIPT
+        <div class="label">
+            Generated Local Script
         </div>
 
+        <div class="code-box">
 
-        <div class="result-body">
+            <pre id="generatedCode"></pre>
 
+            <div class="copy-row">
 
-<textarea
-    id="loader"
-    readonly
-></textarea>
-
-
-            <button id="copy">
-                COPY
-            </button>
-
-
-            <div class="info">
-
-                <span id="requestId">
-                    ID: —
-                </span>
-
-                <span id="lineCount">
-                    LINES: 0
-                </span>
-
-                <span>
-                    TTL: 24H
-                </span>
+                <button id="copyBtn">
+                    COPY
+                </button>
 
             </div>
 
+        </div>
+
+        <div class="info">
+
+            <div class="info-item">
+
+                <div class="info-name">
+                    REQUEST ID
+                </div>
+
+                <div
+                    id="requestId"
+                    class="info-value">
+                    -
+                </div>
+
+            </div>
+
+            <div class="info-item">
+
+                <div class="info-name">
+                    LINES
+                </div>
+
+                <div
+                    id="lineCount"
+                    class="info-value">
+                    -
+                </div>
+
+            </div>
+
+            <div class="info-item">
+
+                <div class="info-name">
+                    TTL
+                </div>
+
+                <div
+                    id="ttl"
+                    class="info-value">
+                    24 HOURS
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
-
-    <div
-        id="error"
-    ></div>
-
+    <div class="footer">
+        USURE REQUEST SYSTEM
+    </div>
 
 </div>
 
 
 <script>
 
-
 const USURE_URL =
-    "https://usure.lvlyvcbcla.workers.dev";
+    "https://usure.lvlyvcbcla.workers.dev/create";
 
 
-const source =
-    document.getElementById(
-        "source"
-    );
+const codeInput =
+    document.getElementById("code");
 
-const create =
-    document.getElementById(
-        "create"
-    );
+const createBtn =
+    document.getElementById("createBtn");
 
-const clear =
-    document.getElementById(
-        "clear"
-    );
+const clearBtn =
+    document.getElementById("clearBtn");
 
-const loader =
-    document.getElementById(
-        "loader"
-    );
+const copyBtn =
+    document.getElementById("copyBtn");
 
 const result =
-    document.getElementById(
-        "result"
-    );
+    document.getElementById("result");
 
-const copy =
-    document.getElementById(
-        "copy"
-    );
+const generatedCode =
+    document.getElementById("generatedCode");
 
 const requestId =
-    document.getElementById(
-        "requestId"
-    );
+    document.getElementById("requestId");
 
 const lineCount =
-    document.getElementById(
-        "lineCount"
-    );
+    document.getElementById("lineCount");
 
-const error =
-    document.getElementById(
-        "error"
-    );
+const errorBox =
+    document.getElementById("error");
 
 
-/*
- * CREATE
- */
+function showError(message) {
 
-create.addEventListener(
+    errorBox.textContent =
+        String(message);
+
+    errorBox.classList.add("visible");
+}
+
+
+function hideError() {
+
+    errorBox.textContent = "";
+
+    errorBox.classList.remove("visible");
+}
+
+
+clearBtn.addEventListener(
+    "click",
+    () => {
+
+        codeInput.value = "";
+
+        generatedCode.textContent = "";
+
+        result.classList.remove("visible");
+
+        hideError();
+
+    }
+);
+
+
+copyBtn.addEventListener(
+    "click",
+    async () => {
+
+        const text =
+            generatedCode.textContent;
+
+        if (!text) {
+            return;
+        }
+
+        try {
+
+            await navigator.clipboard.writeText(text);
+
+            copyBtn.textContent = "COPIED";
+
+            setTimeout(() => {
+                copyBtn.textContent = "COPY";
+            }, 1200);
+
+        } catch {
+
+            copyBtn.textContent = "COPY FAILED";
+
+            setTimeout(() => {
+                copyBtn.textContent = "COPY";
+            }, 1200);
+
+        }
+
+    }
+);
+
+
+createBtn.addEventListener(
     "click",
     async () => {
 
         hideError();
 
-        result.style.display =
-            "none";
-
-
         const code =
-            source.value;
-
+            codeInput.value;
 
         if (!code.trim()) {
 
             showError(
-                "Введите локальный скрипт."
+                "Enter a script first."
             );
 
             return;
         }
 
 
-        if (
-            code.length >
-            100000
-        ) {
+        createBtn.disabled = true;
 
-            showError(
-                "Скрипт слишком большой."
-            );
-
-            return;
-        }
-
-
-        create.disabled =
-            true;
-
-        create.textContent =
+        createBtn.textContent =
             "CREATING...";
+
+
+        result.classList.remove(
+            "visible"
+        );
 
 
         try {
 
             const response =
                 await fetch(
-                    USURE_URL +
-                    "/create",
+                    USURE_URL,
                     {
                         method: "POST",
 
@@ -608,188 +558,74 @@ create.addEventListener(
                 );
 
 
-            const data =
-                await response.json();
+            const text =
+                await response.text();
+
+
+            let data;
+
+            try {
+
+                data =
+                    JSON.parse(text);
+
+            } catch {
+
+                throw new Error(
+                    text ||
+                    `HTTP ${response.status}`
+                );
+
+            }
 
 
             if (!response.ok) {
 
                 throw new Error(
                     data.error ||
-                    "USURE error"
+                    `HTTP ${response.status}`
                 );
+
             }
 
 
-            loader.value =
-                data.loader;
+            generatedCode.textContent =
+                data.loader || "";
 
 
             requestId.textContent =
-                "ID: " +
-                data.request_id;
+                data.id || "-";
 
 
             lineCount.textContent =
-                "LINES: " +
-                data.line_count;
+                data.lineCount ?? "-";
 
 
-            result.style.display =
-                "block";
+            result.classList.add(
+                "visible"
+            );
 
 
-        } catch (e) {
-
-            console.error(e);
+        } catch (error) {
 
             showError(
-                e.message ||
-                "Connection error."
+                error.message ||
+                "Request failed."
             );
 
         } finally {
 
-            create.disabled =
-                false;
+            createBtn.disabled = false;
 
-            create.textContent =
+            createBtn.textContent =
                 "CREATE REQUEST";
+
         }
 
     }
 );
-
-
-/*
- * COPY
- */
-
-copy.addEventListener(
-    "click",
-    async () => {
-
-        if (!loader.value) {
-            return;
-        }
-
-        try {
-
-            await navigator
-                .clipboard
-                .writeText(
-                    loader.value
-                );
-
-            copy.textContent =
-                "COPIED";
-
-            setTimeout(
-                () => {
-                    copy.textContent =
-                        "COPY";
-                },
-                1200
-            );
-
-        } catch {
-
-            loader.select();
-
-            document.execCommand(
-                "copy"
-            );
-        }
-    }
-);
-
-
-/*
- * CLEAR
- */
-
-clear.addEventListener(
-    "click",
-    () => {
-
-        source.value = "";
-
-        loader.value = "";
-
-        result.style.display =
-            "none";
-
-        hideError();
-
-        source.focus();
-    }
-);
-
-
-/*
- * TAB
- */
-
-source.addEventListener(
-    "keydown",
-    event => {
-
-        if (
-            event.key !== "Tab"
-        ) {
-            return;
-        }
-
-        event.preventDefault();
-
-        const start =
-            source.selectionStart;
-
-        const end =
-            source.selectionEnd;
-
-
-        source.value =
-            source.value.substring(
-                0,
-                start
-            )
-            +
-            "    "
-            +
-            source.value.substring(
-                end
-            );
-
-
-        source.selectionStart =
-            source.selectionEnd =
-                start + 4;
-    }
-);
-
-
-function showError(message) {
-
-    error.textContent =
-        message;
-
-    error.style.display =
-        "block";
-}
-
-
-function hideError() {
-
-    error.textContent =
-        "";
-
-    error.style.display =
-        "none";
-}
 
 </script>
 
 </body>
-
 </html>
