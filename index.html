@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>USURE</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+
+    background: #080808;
+
+    color: #eeeeee;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+body {
+
+    display: flex;
+
+    justify-content: center;
+
+    padding: 60px 20px;
+}
+
+.app {
+
+    width: 920px;
+
+    max-width: 100%;
+}
+
+
+/* HEADER */
+
+.header {
+
+    height: 62px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    background: #111111;
+
+    border: 1px solid #2d2d2d;
+}
+
+.logo {
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+.status {
+
+    margin-left: auto;
+
+    color: #777777;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+}
+
+.status::before {
+
+    content: "";
+
+    display: inline-block;
+
+    width: 6px;
+
+    height: 6px;
+
+    margin-right: 7px;
+
+    background: #888888;
+}
+
+
+/* PANEL */
+
+.panel {
+
+    margin-top: 16px;
+
+    background: #101010;
+
+    border: 1px solid #292929;
+}
+
+.title {
+
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 17px;
+
+    border-bottom: 1px solid #292929;
+
+    color: #777777;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+
+/* SOURCE */
+
+#source {
+
+    display: block;
+
+    width: 100%;
+
+    height: 450px;
+
+    resize: vertical;
+
+    padding: 18px;
+
+    outline: none;
+
+    border: none;
+
+    background: #090909;
+
+    color: #eeeeee;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+    tab-size: 4;
+}
+
+#source::placeholder {
+
+    color: #444444;
+}
+
+
+/* BUTTONS */
+
+.buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    padding: 13px;
+
+    border-top: 1px solid #292929;
+
+    background: #111111;
+}
+
+button {
+
+    height: 43px;
+
+    border: 1px solid #777777;
+
+    background: #e8e8e8;
+
+    color: #080808;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+}
+
+#create {
+
+    flex: 1;
+}
+
+#clear {
+
+    width: 110px;
+
+    background: #151515;
+
+    border-color: #333333;
+
+    color: #999999;
+}
+
+button:hover {
+
+    background: #ffffff;
+}
+
+#clear:hover {
+
+    background: #1d1d1d;
+
+    color: #ffffff;
+}
+
+button:disabled {
+
+    opacity: .45;
+
+    cursor: default;
+}
+
+
+/* RESULT */
+
+.result {
+
+    display: none;
+
+    margin-top: 16px;
+
+    background: #101010;
+
+    border: 1px solid #292929;
+}
+
+.result-title {
+
+    padding: 14px 17px;
+
+    border-bottom: 1px solid #292929;
+
+    color: #777777;
+
+    font-size: 10px;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+.result-body {
+
+    padding: 17px;
+}
+
+#loader {
+
+    display: block;
+
+    width: 100%;
+
+    min-height: 190px;
+
+    resize: vertical;
+
+    padding: 15px;
+
+    outline: none;
+
+    border: 1px solid #292929;
+
+    background: #080808;
+
+    color: #dddddd;
+
+    font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+#copy {
+
+    width: 100%;
+
+    margin-top: 12px;
+}
+
+.info {
+
+    display: flex;
+
+    gap: 25px;
+
+    margin-top: 12px;
+
+    color: #666666;
+
+    font-family:
+        Consolas,
+        monospace;
+
+    font-size: 11px;
+}
+
+
+/* ERROR */
+
+#error {
+
+    display: none;
+
+    margin-top: 16px;
+
+    padding: 14px;
+
+    background: #101010;
+
+    border: 1px solid #333333;
+
+    color: #aaaaaa;
+
+    font-size: 12px;
+}
+
+
+@media(max-width:600px) {
+
+    body {
+        padding: 20px 10px;
+    }
+
+    #source {
+        height: 380px;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    #create,
+    #clear {
+        width: 100%;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="app">
+
+
+    <div class="header">
+
+        <div class="logo">
+            USURE
+        </div>
+
+        <div class="status">
+            ONLINE
+        </div>
+
+    </div>
+
+
+    <div class="panel">
+
+
+        <div class="title">
+            LOCAL SCRIPT
+        </div>
+
+
+<textarea
+    id="source"
+    spellcheck="false"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="off"
+    placeholder='print("Hello")
+print("World")'></textarea>
+
+
+        <div class="buttons">
+
+            <button id="clear">
+                CLEAR
+            </button>
+
+            <button id="create">
+                CREATE REQUEST
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+    <div
+        class="result"
+        id="result"
+    >
+
+        <div class="result-title">
+            GENERATED LOCAL SCRIPT
+        </div>
+
+
+        <div class="result-body">
+
+
+<textarea
+    id="loader"
+    readonly
+></textarea>
+
+
+            <button id="copy">
+                COPY
+            </button>
+
+
+            <div class="info">
+
+                <span id="requestId">
+                    ID: —
+                </span>
+
+                <span id="lineCount">
+                    LINES: 0
+                </span>
+
+                <span>
+                    TTL: 24H
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="error"
+    ></div>
+
+
+</div>
+
+
+<script>
+
+
+const USURE_URL =
+    "https://usure.lvlyvcbcla.workers.dev";
+
+
+const source =
+    document.getElementById(
+        "source"
+    );
+
+const create =
+    document.getElementById(
+        "create"
+    );
+
+const clear =
+    document.getElementById(
+        "clear"
+    );
+
+const loader =
+    document.getElementById(
+        "loader"
+    );
+
+const result =
+    document.getElementById(
+        "result"
+    );
+
+const copy =
+    document.getElementById(
+        "copy"
+    );
+
+const requestId =
+    document.getElementById(
+        "requestId"
+    );
+
+const lineCount =
+    document.getElementById(
+        "lineCount"
+    );
+
+const error =
+    document.getElementById(
+        "error"
+    );
+
+
+/*
+ * CREATE
+ */
+
+create.addEventListener(
+    "click",
+    async () => {
+
+        hideError();
+
+        result.style.display =
+            "none";
+
+
+        const code =
+            source.value;
+
+
+        if (!code.trim()) {
+
+            showError(
+                "Введите локальный скрипт."
+            );
+
+            return;
+        }
+
+
+        if (
+            code.length >
+            100000
+        ) {
+
+            showError(
+                "Скрипт слишком большой."
+            );
+
+            return;
+        }
+
+
+        create.disabled =
+            true;
+
+        create.textContent =
+            "CREATING...";
+
+
+        try {
+
+            const response =
+                await fetch(
+                    USURE_URL +
+                    "/create",
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:
+                            JSON.stringify({
+                                code: code
+                            })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.error ||
+                    "USURE error"
+                );
+            }
+
+
+            loader.value =
+                data.loader;
+
+
+            requestId.textContent =
+                "ID: " +
+                data.request_id;
+
+
+            lineCount.textContent =
+                "LINES: " +
+                data.line_count;
+
+
+            result.style.display =
+                "block";
+
+
+        } catch (e) {
+
+            console.error(e);
+
+            showError(
+                e.message ||
+                "Connection error."
+            );
+
+        } finally {
+
+            create.disabled =
+                false;
+
+            create.textContent =
+                "CREATE REQUEST";
+        }
+
+    }
+);
+
+
+/*
+ * COPY
+ */
+
+copy.addEventListener(
+    "click",
+    async () => {
+
+        if (!loader.value) {
+            return;
+        }
+
+        try {
+
+            await navigator
+                .clipboard
+                .writeText(
+                    loader.value
+                );
+
+            copy.textContent =
+                "COPIED";
+
+            setTimeout(
+                () => {
+                    copy.textContent =
+                        "COPY";
+                },
+                1200
+            );
+
+        } catch {
+
+            loader.select();
+
+            document.execCommand(
+                "copy"
+            );
+        }
+    }
+);
+
+
+/*
+ * CLEAR
+ */
+
+clear.addEventListener(
+    "click",
+    () => {
+
+        source.value = "";
+
+        loader.value = "";
+
+        result.style.display =
+            "none";
+
+        hideError();
+
+        source.focus();
+    }
+);
+
+
+/*
+ * TAB
+ */
+
+source.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key !== "Tab"
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const start =
+            source.selectionStart;
+
+        const end =
+            source.selectionEnd;
+
+
+        source.value =
+            source.value.substring(
+                0,
+                start
+            )
+            +
+            "    "
+            +
+            source.value.substring(
+                end
+            );
+
+
+        source.selectionStart =
+            source.selectionEnd =
+                start + 4;
+    }
+);
+
+
+function showError(message) {
+
+    error.textContent =
+        message;
+
+    error.style.display =
+        "block";
+}
+
+
+function hideError() {
+
+    error.textContent =
+        "";
+
+    error.style.display =
+        "none";
+}
+
+</script>
+
+</body>
+
+</html>
