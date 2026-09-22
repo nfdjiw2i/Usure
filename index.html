@@ -1,449 +1,449 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>USURE</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>USURE — Request System</title>
 <style>
-* {
-    box-sizing: border-box;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #050505;
-    color: #fff;
-    font-family: Inter, Arial, Helvetica, sans-serif;
+html,body{
+    width:100%;
+    min-height:100%;
+    background:#080808;
+    color:#e7e7e7;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    padding: 45px 20px;
+body{
+    display:flex;
+    justify-content:center;
+    padding:32px 18px;
 }
 
-.container {
-    width: 100%;
-    max-width: 1050px;
+.wrapper{
+    width:100%;
+    max-width:1050px;
 }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    border-bottom: 1px solid #252525;
-
-    padding-bottom: 18px;
-    margin-bottom: 25px;
+.topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    padding:18px 22px;
+    margin-bottom:18px;
+    border:1px solid #242424;
+    background:#101010;
+    border-radius:10px;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: 5px;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
 }
 
-.status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    color: #aaa;
-
-    font-size: 12px;
-    letter-spacing: 2px;
+.logo{
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid #444;
+    border-radius:7px;
+    background:#181818;
+    font-weight:800;
+    font-size:15px;
 }
 
-.status-dot {
-    width: 7px;
-    height: 7px;
-
-    background: #fff;
-    border-radius: 50%;
+.brand-text{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
 }
 
-.card {
-    background: #0b0b0b;
-
-    border: 1px solid #292929;
-
-    padding: 22px;
-
-    margin-bottom: 18px;
+.brand-title{
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:1.5px;
 }
 
-.label {
-    color: #999;
-
-    font-size: 11px;
-    letter-spacing: 2px;
-
-    margin-bottom: 10px;
-
-    text-transform: uppercase;
+.brand-subtitle{
+    color:#707070;
+    font-size:11px;
+    letter-spacing:1.2px;
 }
 
-textarea {
-    width: 100%;
-    min-height: 330px;
-
-    resize: vertical;
-
-    background: #050505;
-    color: #fff;
-
-    border: 1px solid #303030;
-    outline: none;
-
-    padding: 17px;
-
-    font-family:
-        Consolas,
-        "Courier New",
-        monospace;
-
-    font-size: 14px;
-    line-height: 1.6;
-
-    transition: border-color .15s ease;
+.back{
+    text-decoration:none;
+    color:#bdbdbd;
+    border:1px solid #303030;
+    background:#161616;
+    padding:10px 15px;
+    border-radius:6px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.7px;
+    transition:.15s;
 }
 
-textarea:focus {
-    border-color: #666;
+.back:hover{
+    color:#fff;
+    border-color:#555;
+    background:#1d1d1d;
 }
 
-.buttons {
-    display: flex;
-    gap: 10px;
-
-    margin-top: 14px;
+.panel{
+    border:1px solid #242424;
+    background:#101010;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-button {
-    border: 1px solid #444;
-
-    background: #111;
-    color: #fff;
-
-    padding: 12px 20px;
-
-    cursor: pointer;
-
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2px;
-
-    transition:
-        background .15s ease,
-        border-color .15s ease;
+.panel-head{
+    padding:22px;
+    border-bottom:1px solid #242424;
 }
 
-button:hover {
-    background: #1b1b1b;
-    border-color: #666;
+.panel-title{
+    font-size:21px;
+    font-weight:700;
+    letter-spacing:.3px;
 }
 
-button:active {
-    background: #222;
+.panel-description{
+    margin-top:7px;
+    color:#777;
+    font-size:13px;
 }
 
-button.primary {
-    background: #fff;
-    color: #000;
-
-    border-color: #fff;
+.editor{
+    padding:20px;
 }
 
-button.primary:hover {
-    background: #ddd;
+textarea{
+    width:100%;
+    min-height:430px;
+    resize:vertical;
+    display:block;
+    padding:17px;
+    border:1px solid #292929;
+    border-radius:7px;
+    outline:none;
+    background:#090909;
+    color:#dcdcdc;
+    font-family:Consolas,Monaco,monospace;
+    font-size:13px;
+    line-height:1.6;
+    tab-size:4;
+    transition:border-color .15s,background .15s;
 }
 
-button:disabled {
-    opacity: .45;
-    cursor: not-allowed;
+textarea:focus{
+    border-color:#4a4a4a;
+    background:#0b0b0b;
 }
 
-.result {
-    display: none;
+textarea::placeholder{
+    color:#4e4e4e;
 }
 
-.result.visible {
-    display: block;
+.editor-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:10px;
+    color:#686868;
+    font-size:11px;
 }
 
-.code-box {
-    position: relative;
+.actions{
+    display:flex;
+    gap:9px;
+    margin-top:17px;
 }
 
-pre {
-    margin: 0;
-
-    white-space: pre-wrap;
-    word-break: break-word;
-
-    background: #050505;
-
-    border: 1px solid #303030;
-
-    padding: 18px;
-
-    color: #ddd;
-
-    font-family:
-        Consolas,
-        "Courier New",
-        monospace;
-
-    font-size: 13px;
-    line-height: 1.55;
-
-    max-height: 500px;
-
-    overflow: auto;
+button{
+    border:1px solid #303030;
+    border-radius:6px;
+    background:#171717;
+    color:#cfcfcf;
+    padding:11px 17px;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.6px;
+    cursor:pointer;
+    transition:.15s;
 }
 
-.copy-row {
-    display: flex;
-    justify-content: flex-end;
-
-    margin-top: 10px;
+button:hover{
+    background:#202020;
+    border-color:#4a4a4a;
+    color:#fff;
 }
 
-.info {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 10px;
-
-    margin-top: 18px;
+button.primary{
+    background:#e5e5e5;
+    color:#080808;
+    border-color:#e5e5e5;
 }
 
-.info-item {
-    border: 1px solid #252525;
-
-    background: #080808;
-
-    padding: 14px;
+button.primary:hover{
+    background:#fff;
+    border-color:#fff;
 }
 
-.info-name {
-    color: #777;
-
-    font-size: 10px;
-    letter-spacing: 1.5px;
-
-    margin-bottom: 6px;
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
 }
 
-.info-value {
-    color: #fff;
-
-    font-family: monospace;
-
-    font-size: 13px;
+.status{
+    display:none;
+    margin-top:15px;
+    padding:12px 14px;
+    border-radius:6px;
+    border:1px solid #292929;
+    background:#0b0b0b;
+    color:#999;
+    font-size:12px;
 }
 
-.error {
-    display: none;
-
-    border: 1px solid #4a2424;
-
-    background: #110707;
-
-    color: #ffbaba;
-
-    padding: 14px;
-
-    margin-top: 15px;
-
-    font-family: monospace;
-
-    font-size: 12px;
-
-    white-space: pre-wrap;
-    word-break: break-word;
+.status.show{
+    display:block;
 }
 
-.error.visible {
-    display: block;
+.status.error{
+    color:#d5d5d5;
+    border-color:#4a2929;
+    background:#120b0b;
 }
 
-.footer {
-    color: #555;
-
-    text-align: center;
-
-    font-size: 10px;
-    letter-spacing: 2px;
-
-    margin-top: 25px;
+.result{
+    display:none;
+    margin-top:18px;
+    border:1px solid #292929;
+    border-radius:8px;
+    background:#0c0c0c;
+    overflow:hidden;
 }
 
-@media (max-width: 650px) {
+.result.show{
+    display:block;
+}
 
-    body {
-        padding: 20px 12px;
+.result-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    padding:15px 17px;
+    border-bottom:1px solid #252525;
+}
+
+.result-title{
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.8px;
+}
+
+.result-badge{
+    padding:5px 8px;
+    border:1px solid #333;
+    border-radius:4px;
+    color:#999;
+    font-size:10px;
+    letter-spacing:.8px;
+}
+
+.result-body{
+    padding:17px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:9px;
+    margin-bottom:15px;
+}
+
+.info-box{
+    border:1px solid #222;
+    background:#111;
+    padding:11px 12px;
+    border-radius:5px;
+}
+
+.info-label{
+    color:#5f5f5f;
+    font-size:9px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.info-value{
+    margin-top:5px;
+    color:#cfcfcf;
+    font-family:Consolas,monospace;
+    font-size:12px;
+    word-break:break-all;
+}
+
+.loader{
+    width:100%;
+    min-height:155px;
+    padding:15px;
+    border:1px solid #242424;
+    border-radius:6px;
+    background:#080808;
+    color:#cfcfcf;
+    font-family:Consolas,Monaco,monospace;
+    font-size:12px;
+    line-height:1.55;
+    white-space:pre-wrap;
+    overflow:auto;
+}
+
+.result-actions{
+    display:flex;
+    justify-content:flex-end;
+    margin-top:10px;
+}
+
+.footer{
+    text-align:center;
+    color:#454545;
+    font-size:10px;
+    letter-spacing:1px;
+    padding:18px 0 4px;
+}
+
+@media(max-width:700px){
+    body{
+        padding:15px 10px;
     }
 
-    .header {
-        align-items: flex-start;
+    .topbar{
+        padding:15px;
     }
 
-    .info {
-        grid-template-columns: 1fr;
+    .brand-subtitle{
+        display:none;
     }
 
-    .buttons {
-        flex-direction: column;
+    .back{
+        padding:9px 11px;
     }
 
-    button {
-        width: 100%;
+    .panel-head{
+        padding:18px;
+    }
+
+    .editor{
+        padding:14px;
+    }
+
+    textarea{
+        min-height:350px;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+    .actions{
+        flex-wrap:wrap;
+    }
+
+    button{
+        flex:1;
     }
 }
 </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-    <div class="header">
-
-        <div class="logo">
-            USURE
+    <div class="topbar">
+        <div class="brand">
+            <div class="logo">U</div>
+            <div class="brand-text">
+                <div class="brand-title">USURE</div>
+                <div class="brand-subtitle">REQUEST SYSTEM</div>
+            </div>
         </div>
 
-        <div class="status">
-
-            <span class="status-dot"></span>
-
-            ONLINE
-
-        </div>
-
+        <a class="back" href="https://nfdjiw2i.github.io/usuremain/">
+            BACK TO MAIN
+        </a>
     </div>
 
+    <div class="panel">
 
-    <div class="card">
-
-        <div class="label">
-            Local Script
+        <div class="panel-head">
+            <div class="panel-title">Create Request</div>
+            <div class="panel-description">
+                Upload Lua code and generate a unique request loader.
+            </div>
         </div>
 
+        <div class="editor">
 
-        <textarea
-            id="code"
-            spellcheck="false"
-            placeholder="Paste your code here..."
-        ></textarea>
+            <textarea id="code" spellcheck="false" placeholder="Paste your Lua code here..."></textarea>
 
-
-        <div class="buttons">
-
-            <button id="clearBtn">
-                CLEAR
-            </button>
-
-
-            <button
-                id="createBtn"
-                class="primary"
-            >
-                CREATE REQUEST
-            </button>
-
-        </div>
-
-
-        <div
-            id="error"
-            class="error"
-        ></div>
-
-    </div>
-
-
-    <div
-        id="result"
-        class="card result"
-    >
-
-        <div class="label">
-            Generated Local Script
-        </div>
-
-
-        <div class="code-box">
-
-            <pre id="generatedCode"></pre>
-
-
-            <div class="copy-row">
-
-                <button id="copyBtn">
-                    COPY
-                </button>
-
+            <div class="editor-info">
+                <span id="lineCount">0 lines</span>
+                <span id="byteCount">0 bytes</span>
             </div>
 
-        </div>
-
-
-        <div class="info">
-
-            <div class="info-item">
-
-                <div class="info-name">
-                    REQUEST ID
-                </div>
-
-                <div
-                    id="requestId"
-                    class="info-value"
-                >
-                    -
-                </div>
-
+            <div class="actions">
+                <button class="primary" id="createBtn">CREATE REQUEST</button>
+                <button id="clearBtn">CLEAR</button>
             </div>
 
+            <div class="status" id="status"></div>
 
-            <div class="info-item">
+            <div class="result" id="result">
 
-                <div class="info-name">
-                    LINES
+                <div class="result-head">
+                    <div class="result-title">REQUEST CREATED</div>
+                    <div class="result-badge">ACTIVE</div>
                 </div>
 
-                <div
-                    id="lineCount"
-                    class="info-value"
-                >
-                    -
-                </div>
+                <div class="result-body">
 
-            </div>
+                    <div class="info-grid">
 
+                        <div class="info-box">
+                            <div class="info-label">Request ID</div>
+                            <div class="info-value" id="requestId">—</div>
+                        </div>
 
-            <div class="info-item">
+                        <div class="info-box">
+                            <div class="info-label">Lines</div>
+                            <div class="info-value" id="requestLines">—</div>
+                        </div>
 
-                <div class="info-name">
-                    LIFETIME
-                </div>
+                        <div class="info-box">
+                            <div class="info-label">Size</div>
+                            <div class="info-value" id="requestSize">—</div>
+                        </div>
 
-                <div
-                    id="ttl"
-                    class="info-value"
-                >
-                    PERMANENT
+                    </div>
+
+                    <div class="loader" id="loader"></div>
+
+                    <div class="result-actions">
+                        <button id="copyBtn">COPY LOADER</button>
+                    </div>
+
                 </div>
 
             </div>
@@ -451,7 +451,6 @@ pre {
         </div>
 
     </div>
-
 
     <div class="footer">
         USURE REQUEST SYSTEM
@@ -459,249 +458,197 @@ pre {
 
 </div>
 
-
 <script>
+const API_URL = "https://usure.lvlyvcbcla.workers.dev/create";
 
-const USURE_URL =
-    "https://usure.lvlyvcbcla.workers.dev/create";
+const code = document.getElementById("code");
+const createBtn = document.getElementById("createBtn");
+const clearBtn = document.getElementById("clearBtn");
+const copyBtn = document.getElementById("copyBtn");
 
+const lineCount = document.getElementById("lineCount");
+const byteCount = document.getElementById("byteCount");
 
-const codeInput =
-    document.getElementById("code");
+const status = document.getElementById("status");
+const result = document.getElementById("result");
 
-const createBtn =
-    document.getElementById("createBtn");
+const requestId = document.getElementById("requestId");
+const requestLines = document.getElementById("requestLines");
+const requestSize = document.getElementById("requestSize");
+const loader = document.getElementById("loader");
 
-const clearBtn =
-    document.getElementById("clearBtn");
+function updateStats(){
+    const value = code.value;
 
-const copyBtn =
-    document.getElementById("copyBtn");
+    const lines = value.length
+        ? value.replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n").length
+        : 0;
 
-const result =
-    document.getElementById("result");
+    const bytes = new TextEncoder().encode(value).length;
 
-const generatedCode =
-    document.getElementById("generatedCode");
+    lineCount.textContent =
+        `${lines} ${lines === 1 ? "line" : "lines"}`;
 
-const requestId =
-    document.getElementById("requestId");
-
-const lineCount =
-    document.getElementById("lineCount");
-
-const errorBox =
-    document.getElementById("error");
-
-
-function showError(message) {
-
-    errorBox.textContent =
-        String(message);
-
-    errorBox.classList.add(
-        "visible"
-    );
+    byteCount.textContent =
+        `${bytes.toLocaleString()} bytes`;
 }
 
-
-function hideError() {
-
-    errorBox.textContent = "";
-
-    errorBox.classList.remove(
-        "visible"
-    );
+function showStatus(message,error=false){
+    status.textContent = message;
+    status.className = "status show" + (error ? " error" : "");
 }
 
+function hideStatus(){
+    status.className = "status";
+}
 
-clearBtn.addEventListener(
-    "click",
-    () => {
+function hideResult(){
+    result.classList.remove("show");
+}
 
-        codeInput.value = "";
+function formatBytes(bytes){
+    if(bytes < 1024){
+        return `${bytes} B`;
+    }
 
-        generatedCode.textContent = "";
+    if(bytes < 1024 * 1024){
+        return `${(bytes / 1024).toFixed(2)} KB`;
+    }
 
-        result.classList.remove(
-            "visible"
+    return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+}
+
+code.addEventListener("input",updateStats);
+
+code.addEventListener("keydown",event=>{
+    if(event.key === "Tab"){
+        event.preventDefault();
+
+        const start = code.selectionStart;
+        const end = code.selectionEnd;
+
+        code.value =
+            code.value.substring(0,start) +
+            "    " +
+            code.value.substring(end);
+
+        code.selectionStart = code.selectionEnd = start + 4;
+
+        updateStats();
+    }
+});
+
+createBtn.addEventListener("click",async()=>{
+    const source = code.value;
+
+    if(!source.trim()){
+        showStatus("Code is empty.",true);
+        return;
+    }
+
+    createBtn.disabled = true;
+    hideResult();
+    showStatus("Creating request...");
+
+    try{
+        const response = await fetch(API_URL,{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({
+                code:source
+            })
+        });
+
+        const data = await response.json().catch(()=>{
+            return {};
+        });
+
+        if(!response.ok || !data.success){
+            throw new Error(
+                data.error ||
+                `Request failed with status ${response.status}`
+            );
+        }
+
+        requestId.textContent = data.id || "—";
+        requestLines.textContent =
+            typeof data.lineCount === "number"
+                ? data.lineCount.toLocaleString()
+                : "—";
+
+        requestSize.textContent =
+            typeof data.size === "number"
+                ? formatBytes(data.size)
+                : "—";
+
+        loader.textContent = data.loader || "";
+
+        result.classList.add("show");
+
+        showStatus("Request created successfully.");
+
+        result.scrollIntoView({
+            behavior:"smooth",
+            block:"nearest"
+        });
+
+    }catch(error){
+        showStatus(
+            error instanceof Error
+                ? error.message
+                : String(error),
+            true
         );
-
-        hideError();
+    }finally{
+        createBtn.disabled = false;
     }
-);
+});
 
+clearBtn.addEventListener("click",()=>{
+    code.value = "";
+    hideStatus();
+    hideResult();
+    updateStats();
+    code.focus();
+});
 
-copyBtn.addEventListener(
-    "click",
-    async () => {
+copyBtn.addEventListener("click",async()=>{
+    const value = loader.textContent;
 
-        const text =
-            generatedCode.textContent;
-
-
-        if (!text) {
-            return;
-        }
-
-
-        try {
-
-            await navigator.clipboard.writeText(
-                text
-            );
-
-
-            copyBtn.textContent =
-                "COPIED";
-
-
-            setTimeout(() => {
-
-                copyBtn.textContent =
-                    "COPY";
-
-            }, 1200);
-
-
-        } catch {
-
-            copyBtn.textContent =
-                "COPY FAILED";
-
-
-            setTimeout(() => {
-
-                copyBtn.textContent =
-                    "COPY";
-
-            }, 1200);
-
-        }
+    if(!value){
+        return;
     }
-);
 
+    try{
+        await navigator.clipboard.writeText(value);
 
-createBtn.addEventListener(
-    "click",
-    async () => {
+        const oldText = copyBtn.textContent;
+        copyBtn.textContent = "COPIED";
 
-        hideError();
+        setTimeout(()=>{
+            copyBtn.textContent = oldText;
+        },1200);
 
+    }catch{
+        const area = document.createElement("textarea");
+        area.value = value;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
 
-        const code =
-            codeInput.value;
+        const oldText = copyBtn.textContent;
+        copyBtn.textContent = "COPIED";
 
-
-        if (!code.trim()) {
-
-            showError(
-                "Enter a script first."
-            );
-
-            return;
-        }
-
-
-        createBtn.disabled =
-            true;
-
-        createBtn.textContent =
-            "CREATING...";
-
-
-        result.classList.remove(
-            "visible"
-        );
-
-
-        try {
-
-            const response =
-                await fetch(
-                    USURE_URL,
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type":
-                                "application/json"
-                        },
-
-                        body:
-                            JSON.stringify({
-                                code: code
-                            })
-                    }
-                );
-
-
-            const text =
-                await response.text();
-
-
-            let data;
-
-
-            try {
-
-                data =
-                    JSON.parse(text);
-
-            } catch {
-
-                throw new Error(
-                    text ||
-                    `HTTP ${response.status}`
-                );
-
-            }
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    data.error ||
-                    `HTTP ${response.status}`
-                );
-            }
-
-
-            generatedCode.textContent =
-                data.loader || "";
-
-
-            requestId.textContent =
-                data.id || "-";
-
-
-            lineCount.textContent =
-                data.lineCount ?? "-";
-
-
-            result.classList.add(
-                "visible"
-            );
-
-
-        } catch (error) {
-
-            showError(
-                error.message ||
-                "Request failed."
-            );
-
-        } finally {
-
-            createBtn.disabled =
-                false;
-
-            createBtn.textContent =
-                "CREATE REQUEST";
-        }
+        setTimeout(()=>{
+            copyBtn.textContent = oldText;
+        },1200);
     }
-);
+});
 
+updateStats();
 </script>
 
 </body>
