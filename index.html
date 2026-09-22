@@ -19,11 +19,7 @@ body {
     min-height: 100%;
     background: #050505;
     color: #fff;
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
 body {
@@ -41,7 +37,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     border-bottom: 1px solid #252525;
+
     padding-bottom: 18px;
     margin-bottom: 25px;
 }
@@ -56,7 +54,9 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+
     color: #aaa;
+
     font-size: 12px;
     letter-spacing: 2px;
 }
@@ -64,28 +64,36 @@ body {
 .status-dot {
     width: 7px;
     height: 7px;
+
     background: #fff;
     border-radius: 50%;
 }
 
 .card {
     background: #0b0b0b;
+
     border: 1px solid #292929;
+
     padding: 22px;
+
     margin-bottom: 18px;
 }
 
 .label {
     color: #999;
+
     font-size: 11px;
     letter-spacing: 2px;
+
     margin-bottom: 10px;
+
     text-transform: uppercase;
 }
 
 textarea {
     width: 100%;
     min-height: 330px;
+
     resize: vertical;
 
     background: #050505;
@@ -114,11 +122,13 @@ textarea:focus {
 .buttons {
     display: flex;
     gap: 10px;
+
     margin-top: 14px;
 }
 
 button {
     border: 1px solid #444;
+
     background: #111;
     color: #fff;
 
@@ -147,6 +157,7 @@ button:active {
 button.primary {
     background: #fff;
     color: #000;
+
     border-color: #fff;
 }
 
@@ -178,6 +189,7 @@ pre {
     word-break: break-word;
 
     background: #050505;
+
     border: 1px solid #303030;
 
     padding: 18px;
@@ -193,38 +205,50 @@ pre {
     line-height: 1.55;
 
     max-height: 500px;
+
     overflow: auto;
 }
 
 .copy-row {
     display: flex;
     justify-content: flex-end;
+
     margin-top: 10px;
 }
 
 .info {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
     gap: 10px;
+
     margin-top: 18px;
 }
 
 .info-item {
     border: 1px solid #252525;
+
     background: #080808;
+
     padding: 14px;
 }
 
 .info-name {
     color: #777;
+
     font-size: 10px;
     letter-spacing: 1.5px;
+
     margin-bottom: 6px;
 }
 
 .info-value {
     color: #fff;
+
     font-family: monospace;
+
     font-size: 13px;
 }
 
@@ -232,6 +256,7 @@ pre {
     display: none;
 
     border: 1px solid #4a2424;
+
     background: #110707;
 
     color: #ffbaba;
@@ -241,6 +266,7 @@ pre {
     margin-top: 15px;
 
     font-family: monospace;
+
     font-size: 12px;
 
     white-space: pre-wrap;
@@ -253,13 +279,17 @@ pre {
 
 .footer {
     color: #555;
+
     text-align: center;
+
     font-size: 10px;
     letter-spacing: 2px;
+
     margin-top: 25px;
 }
 
 @media (max-width: 650px) {
+
     body {
         padding: 20px 12px;
     }
@@ -288,13 +318,21 @@ pre {
 <div class="container">
 
     <div class="header">
-        <div class="logo">USURE</div>
+
+        <div class="logo">
+            USURE
+        </div>
 
         <div class="status">
+
             <span class="status-dot"></span>
+
             ONLINE
+
         </div>
+
     </div>
+
 
     <div class="card">
 
@@ -302,10 +340,13 @@ pre {
             Local Script
         </div>
 
+
         <textarea
             id="code"
             spellcheck="false"
-            placeholder="Paste your code here..."></textarea>
+            placeholder="Paste your code here..."
+        ></textarea>
+
 
         <div class="buttons">
 
@@ -313,32 +354,39 @@ pre {
                 CLEAR
             </button>
 
+
             <button
                 id="createBtn"
-                class="primary">
+                class="primary"
+            >
                 CREATE REQUEST
             </button>
 
         </div>
 
+
         <div
             id="error"
-            class="error"></div>
+            class="error"
+        ></div>
 
     </div>
 
 
     <div
         id="result"
-        class="card result">
+        class="card result"
+    >
 
         <div class="label">
             Generated Local Script
         </div>
 
+
         <div class="code-box">
 
             <pre id="generatedCode"></pre>
+
 
             <div class="copy-row">
 
@@ -350,6 +398,7 @@ pre {
 
         </div>
 
+
         <div class="info">
 
             <div class="info-item">
@@ -360,11 +409,13 @@ pre {
 
                 <div
                     id="requestId"
-                    class="info-value">
+                    class="info-value"
+                >
                     -
                 </div>
 
             </div>
+
 
             <div class="info-item">
 
@@ -374,22 +425,25 @@ pre {
 
                 <div
                     id="lineCount"
-                    class="info-value">
+                    class="info-value"
+                >
                     -
                 </div>
 
             </div>
 
+
             <div class="info-item">
 
                 <div class="info-name">
-                    TTL
+                    LIFETIME
                 </div>
 
                 <div
                     id="ttl"
-                    class="info-value">
-                    24 HOURS
+                    class="info-value"
+                >
+                    PERMANENT
                 </div>
 
             </div>
@@ -397,6 +451,7 @@ pre {
         </div>
 
     </div>
+
 
     <div class="footer">
         USURE REQUEST SYSTEM
@@ -444,7 +499,9 @@ function showError(message) {
     errorBox.textContent =
         String(message);
 
-    errorBox.classList.add("visible");
+    errorBox.classList.add(
+        "visible"
+    );
 }
 
 
@@ -452,7 +509,9 @@ function hideError() {
 
     errorBox.textContent = "";
 
-    errorBox.classList.remove("visible");
+    errorBox.classList.remove(
+        "visible"
+    );
 }
 
 
@@ -464,10 +523,11 @@ clearBtn.addEventListener(
 
         generatedCode.textContent = "";
 
-        result.classList.remove("visible");
+        result.classList.remove(
+            "visible"
+        );
 
         hideError();
-
     }
 );
 
@@ -479,30 +539,45 @@ copyBtn.addEventListener(
         const text =
             generatedCode.textContent;
 
+
         if (!text) {
             return;
         }
 
+
         try {
 
-            await navigator.clipboard.writeText(text);
+            await navigator.clipboard.writeText(
+                text
+            );
 
-            copyBtn.textContent = "COPIED";
+
+            copyBtn.textContent =
+                "COPIED";
+
 
             setTimeout(() => {
-                copyBtn.textContent = "COPY";
+
+                copyBtn.textContent =
+                    "COPY";
+
             }, 1200);
+
 
         } catch {
 
-            copyBtn.textContent = "COPY FAILED";
+            copyBtn.textContent =
+                "COPY FAILED";
+
 
             setTimeout(() => {
-                copyBtn.textContent = "COPY";
+
+                copyBtn.textContent =
+                    "COPY";
+
             }, 1200);
 
         }
-
     }
 );
 
@@ -513,8 +588,10 @@ createBtn.addEventListener(
 
         hideError();
 
+
         const code =
             codeInput.value;
+
 
         if (!code.trim()) {
 
@@ -526,7 +603,8 @@ createBtn.addEventListener(
         }
 
 
-        createBtn.disabled = true;
+        createBtn.disabled =
+            true;
 
         createBtn.textContent =
             "CREATING...";
@@ -564,6 +642,7 @@ createBtn.addEventListener(
 
             let data;
 
+
             try {
 
                 data =
@@ -585,7 +664,6 @@ createBtn.addEventListener(
                     data.error ||
                     `HTTP ${response.status}`
                 );
-
             }
 
 
@@ -615,13 +693,12 @@ createBtn.addEventListener(
 
         } finally {
 
-            createBtn.disabled = false;
+            createBtn.disabled =
+                false;
 
             createBtn.textContent =
                 "CREATE REQUEST";
-
         }
-
     }
 );
 
