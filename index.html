@@ -1,451 +1,356 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>USURE — Request System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USURE Obfuscator</title>
+
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
-    background:#080808;
-    color:#e7e7e7;
-    font-family:Inter,Segoe UI,Arial,sans-serif;
+html,
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #070707;
+    color: #eeeeee;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    display:flex;
-    justify-content:center;
-    padding:32px 18px;
+body {
+    padding: 40px 20px;
 }
 
-.wrapper{
-    width:100%;
-    max-width:1050px;
+.container {
+    width: min(1100px, 100%);
+    margin: 0 auto;
 }
 
-.topbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:20px;
-    padding:18px 22px;
-    margin-bottom:18px;
-    border:1px solid #242424;
-    background:#101010;
-    border-radius:10px;
+.header {
+    margin-bottom: 30px;
 }
 
-.brand{
-    display:flex;
-    align-items:center;
-    gap:13px;
+.logo {
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: 5px;
 }
 
-.logo{
-    width:38px;
-    height:38px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border:1px solid #444;
-    border-radius:7px;
-    background:#181818;
-    font-weight:800;
-    font-size:15px;
+.subtitle {
+    margin-top: 8px;
+    color: #777777;
+    font-size: 13px;
+    letter-spacing: 1px;
 }
 
-.brand-text{
-    display:flex;
-    flex-direction:column;
-    gap:3px;
+.panel {
+    background: #0d0d0d;
+    border: 1px solid #202020;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 15px 50px rgba(0,0,0,.35);
 }
 
-.brand-title{
-    font-size:16px;
-    font-weight:700;
-    letter-spacing:1.5px;
+.label {
+    display: block;
+    margin-bottom: 10px;
+    color: #a0a0a0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-.brand-subtitle{
-    color:#707070;
-    font-size:11px;
-    letter-spacing:1.2px;
+textarea {
+    width: 100%;
+    min-height: 430px;
+    resize: vertical;
+    border: 1px solid #242424;
+    border-radius: 9px;
+    outline: none;
+    padding: 18px;
+    background: #080808;
+    color: #eeeeee;
+    font-family: Consolas, Monaco, monospace;
+    font-size: 14px;
+    line-height: 1.55;
+    transition: .2s;
 }
 
-.back{
-    text-decoration:none;
-    color:#bdbdbd;
-    border:1px solid #303030;
-    background:#161616;
-    padding:10px 15px;
-    border-radius:6px;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:.7px;
-    transition:.15s;
+textarea:focus {
+    border-color: #444444;
+    box-shadow: 0 0 0 2px rgba(255,255,255,.025);
 }
 
-.back:hover{
-    color:#fff;
-    border-color:#555;
-    background:#1d1d1d;
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
 }
 
-.panel{
-    border:1px solid #242424;
-    background:#101010;
-    border-radius:10px;
-    overflow:hidden;
+button {
+    border: 1px solid #303030;
+    border-radius: 8px;
+    padding: 12px 20px;
+    background: #151515;
+    color: #eeeeee;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .18s;
 }
 
-.panel-head{
-    padding:22px;
-    border-bottom:1px solid #242424;
+button:hover {
+    background: #202020;
+    border-color: #444444;
 }
 
-.panel-title{
-    font-size:21px;
-    font-weight:700;
-    letter-spacing:.3px;
+button:active {
+    transform: scale(.98);
 }
 
-.panel-description{
-    margin-top:7px;
-    color:#777;
-    font-size:13px;
+.primary {
+    background: #eeeeee;
+    color: #080808;
+    border-color: #eeeeee;
 }
 
-.editor{
-    padding:20px;
+.primary:hover {
+    background: #d5d5d5;
+    border-color: #d5d5d5;
 }
 
-textarea{
-    width:100%;
-    min-height:430px;
-    resize:vertical;
-    display:block;
-    padding:17px;
-    border:1px solid #292929;
-    border-radius:7px;
-    outline:none;
-    background:#090909;
-    color:#dcdcdc;
-    font-family:Consolas,Monaco,monospace;
-    font-size:13px;
-    line-height:1.6;
-    tab-size:4;
-    transition:border-color .15s,background .15s;
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
 }
 
-textarea:focus{
-    border-color:#4a4a4a;
-    background:#0b0b0b;
+.status {
+    display: none;
+    margin-top: 15px;
+    padding: 12px 14px;
+    border: 1px solid #242424;
+    border-radius: 8px;
+    background: #101010;
+    color: #9d9d9d;
+    font-size: 13px;
 }
 
-textarea::placeholder{
-    color:#4e4e4e;
+.status.show {
+    display: block;
 }
 
-.editor-info{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:10px;
-    color:#686868;
-    font-size:11px;
+.status.success {
+    color: #cfcfcf;
 }
 
-.actions{
-    display:flex;
-    gap:9px;
-    margin-top:17px;
+.status.error {
+    color: #ff8585;
+    border-color: #402020;
+    background: #140b0b;
 }
 
-button{
-    border:1px solid #303030;
-    border-radius:6px;
-    background:#171717;
-    color:#cfcfcf;
-    padding:11px 17px;
-    font-size:12px;
-    font-weight:700;
-    letter-spacing:.6px;
-    cursor:pointer;
-    transition:.15s;
+.output {
+    display: none;
+    margin-top: 20px;
 }
 
-button:hover{
-    background:#202020;
-    border-color:#4a4a4a;
-    color:#fff;
+.output.show {
+    display: block;
 }
 
-button.primary{
-    background:#e5e5e5;
-    color:#080808;
-    border-color:#e5e5e5;
+.output textarea {
+    min-height: 300px;
 }
 
-button.primary:hover{
-    background:#fff;
-    border-color:#fff;
+.output-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
 }
 
-button:disabled{
-    opacity:.45;
-    cursor:not-allowed;
+.output-title {
+    color: #a0a0a0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
 }
 
-.status{
-    display:none;
-    margin-top:15px;
-    padding:12px 14px;
-    border-radius:6px;
-    border:1px solid #292929;
-    background:#0b0b0b;
-    color:#999;
-    font-size:12px;
+.copy {
+    padding: 8px 14px;
+    font-size: 12px;
 }
 
-.status.show{
-    display:block;
+.info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.status.error{
-    color:#d5d5d5;
-    border-color:#4a2929;
-    background:#120b0b;
+.info-box {
+    padding: 14px;
+    border: 1px solid #1d1d1d;
+    border-radius: 8px;
+    background: #0a0a0a;
 }
 
-.result{
-    display:none;
-    margin-top:18px;
-    border:1px solid #292929;
-    border-radius:8px;
-    background:#0c0c0c;
-    overflow:hidden;
+.info-title {
+    color: #666666;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
-.result.show{
-    display:block;
+.info-value {
+    margin-top: 6px;
+    color: #d8d8d8;
+    font-size: 13px;
 }
 
-.result-head{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:15px;
-    padding:15px 17px;
-    border-bottom:1px solid #252525;
+.footer {
+    margin-top: 20px;
+    text-align: center;
+    color: #444444;
+    font-size: 11px;
+    letter-spacing: 1px;
 }
 
-.result-title{
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:.8px;
-}
-
-.result-badge{
-    padding:5px 8px;
-    border:1px solid #333;
-    border-radius:4px;
-    color:#999;
-    font-size:10px;
-    letter-spacing:.8px;
-}
-
-.result-body{
-    padding:17px;
-}
-
-.info-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:9px;
-    margin-bottom:15px;
-}
-
-.info-box{
-    border:1px solid #222;
-    background:#111;
-    padding:11px 12px;
-    border-radius:5px;
-}
-
-.info-label{
-    color:#5f5f5f;
-    font-size:9px;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.info-value{
-    margin-top:5px;
-    color:#cfcfcf;
-    font-family:Consolas,monospace;
-    font-size:12px;
-    word-break:break-all;
-}
-
-.loader{
-    width:100%;
-    min-height:155px;
-    padding:15px;
-    border:1px solid #242424;
-    border-radius:6px;
-    background:#080808;
-    color:#cfcfcf;
-    font-family:Consolas,Monaco,monospace;
-    font-size:12px;
-    line-height:1.55;
-    white-space:pre-wrap;
-    overflow:auto;
-}
-
-.result-actions{
-    display:flex;
-    justify-content:flex-end;
-    margin-top:10px;
-}
-
-.footer{
-    text-align:center;
-    color:#454545;
-    font-size:10px;
-    letter-spacing:1px;
-    padding:18px 0 4px;
-}
-
-@media(max-width:700px){
-    body{
-        padding:15px 10px;
+@media (max-width: 700px) {
+    body {
+        padding: 20px 12px;
     }
 
-    .topbar{
-        padding:15px;
+    .panel {
+        padding: 14px;
     }
 
-    .brand-subtitle{
-        display:none;
+    .logo {
+        font-size: 24px;
     }
 
-    .back{
-        padding:9px 11px;
+    .info {
+        grid-template-columns: 1fr;
     }
 
-    .panel-head{
-        padding:18px;
+    .actions {
+        flex-direction: column;
     }
 
-    .editor{
-        padding:14px;
+    button {
+        width: 100%;
     }
 
-    textarea{
-        min-height:350px;
-    }
-
-    .info-grid{
-        grid-template-columns:1fr;
-    }
-
-    .actions{
-        flex-wrap:wrap;
-    }
-
-    button{
-        flex:1;
+    textarea {
+        min-height: 350px;
     }
 }
 </style>
 </head>
+
 <body>
 
-<div class="wrapper">
+<div class="container">
 
-    <div class="topbar">
-        <div class="brand">
-            <div class="logo">U</div>
-            <div class="brand-text">
-                <div class="brand-title">USURE</div>
-                <div class="brand-subtitle">REQUEST SYSTEM</div>
-            </div>
-        </div>
-
-        <a class="back" href="https://nfdjiw2i.github.io/usuremain/">
-            BACK TO MAIN
-        </a>
+    <div class="header">
+        <div class="logo">USURE</div>
+        <div class="subtitle">SECURE SCRIPT DELIVERY SYSTEM</div>
     </div>
 
     <div class="panel">
 
-        <div class="panel-head">
-            <div class="panel-title">Create Request</div>
-            <div class="panel-description">
-                Upload Lua code and generate a unique request loader.
-            </div>
+        <label class="label">Lua Source</label>
+
+        <textarea
+            id="source"
+            spellcheck="false"
+            placeholder="Вставьте Lua код сюда..."
+        ></textarea>
+
+        <div class="actions">
+            <button
+                class="primary"
+                id="generate"
+                onclick="generateScript()"
+            >
+                GENERATE
+            </button>
+
+            <button onclick="clearAll()">
+                CLEAR
+            </button>
         </div>
 
-        <div class="editor">
+        <div
+            id="status"
+            class="status"
+        ></div>
 
-            <textarea id="code" spellcheck="false" placeholder="Paste your Lua code here..."></textarea>
+        <div
+            id="output"
+            class="output"
+        >
 
-            <div class="editor-info">
-                <span id="lineCount">0 lines</span>
-                <span id="byteCount">0 bytes</span>
-            </div>
+            <div class="output-head">
 
-            <div class="actions">
-                <button class="primary" id="createBtn">CREATE REQUEST</button>
-                <button id="clearBtn">CLEAR</button>
-            </div>
-
-            <div class="status" id="status"></div>
-
-            <div class="result" id="result">
-
-                <div class="result-head">
-                    <div class="result-title">REQUEST CREATED</div>
-                    <div class="result-badge">ACTIVE</div>
+                <div class="output-title">
+                    Generated LocalScript
                 </div>
 
-                <div class="result-body">
+                <button
+                    class="copy"
+                    onclick="copyResult()"
+                >
+                    COPY
+                </button>
 
-                    <div class="info-grid">
+            </div>
 
-                        <div class="info-box">
-                            <div class="info-label">Request ID</div>
-                            <div class="info-value" id="requestId">—</div>
-                        </div>
+            <textarea
+                id="result"
+                readonly
+                spellcheck="false"
+            ></textarea>
 
-                        <div class="info-box">
-                            <div class="info-label">Lines</div>
-                            <div class="info-value" id="requestLines">—</div>
-                        </div>
+        </div>
 
-                        <div class="info-box">
-                            <div class="info-label">Size</div>
-                            <div class="info-value" id="requestSize">—</div>
-                        </div>
+        <div class="info">
 
-                    </div>
-
-                    <div class="loader" id="loader"></div>
-
-                    <div class="result-actions">
-                        <button id="copyBtn">COPY LOADER</button>
-                    </div>
-
+            <div class="info-box">
+                <div class="info-title">
+                    Creator
                 </div>
 
+                <div class="info-value">
+                    Worker #1
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-title">
+                    Delivery
+                </div>
+
+                <div class="info-value">
+                    Worker #2
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-title">
+                    Storage
+                </div>
+
+                <div class="info-value">
+                    Firebase
+                </div>
             </div>
 
         </div>
@@ -453,202 +358,199 @@ button:disabled{
     </div>
 
     <div class="footer">
-        USURE REQUEST SYSTEM
+        USURE // PRIVATE CODE DELIVERY
     </div>
 
 </div>
 
 <script>
-const API_URL = "https://usure.lvlyvcbcla.workers.dev/create";
 
-const code = document.getElementById("code");
-const createBtn = document.getElementById("createBtn");
-const clearBtn = document.getElementById("clearBtn");
-const copyBtn = document.getElementById("copyBtn");
+const CREATOR_WORKER =
+    "https://noisy-meadow-1f83.lvlyvcbcla.workers.dev";
 
-const lineCount = document.getElementById("lineCount");
-const byteCount = document.getElementById("byteCount");
+const ATTACHER_WORKER =
+    "https://bold-darkness-4fdd.lvlyvcbcla.workers.dev";
 
-const status = document.getElementById("status");
-const result = document.getElementById("result");
+async function generateScript() {
 
-const requestId = document.getElementById("requestId");
-const requestLines = document.getElementById("requestLines");
-const requestSize = document.getElementById("requestSize");
-const loader = document.getElementById("loader");
+    const source =
+        document.getElementById("source").value;
 
-function updateStats(){
-    const value = code.value;
+    const status =
+        document.getElementById("status");
 
-    const lines = value.length
-        ? value.replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n").length
-        : 0;
+    const result =
+        document.getElementById("result");
 
-    const bytes = new TextEncoder().encode(value).length;
+    const output =
+        document.getElementById("output");
 
-    lineCount.textContent =
-        `${lines} ${lines === 1 ? "line" : "lines"}`;
+    const button =
+        document.getElementById("generate");
 
-    byteCount.textContent =
-        `${bytes.toLocaleString()} bytes`;
-}
+    if (!source.trim()) {
 
-function showStatus(message,error=false){
-    status.textContent = message;
-    status.className = "status show" + (error ? " error" : "");
-}
+        showStatus(
+            "Вставьте Lua код.",
+            true
+        );
 
-function hideStatus(){
-    status.className = "status";
-}
-
-function hideResult(){
-    result.classList.remove("show");
-}
-
-function formatBytes(bytes){
-    if(bytes < 1024){
-        return `${bytes} B`;
-    }
-
-    if(bytes < 1024 * 1024){
-        return `${(bytes / 1024).toFixed(2)} KB`;
-    }
-
-    return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
-}
-
-code.addEventListener("input",updateStats);
-
-code.addEventListener("keydown",event=>{
-    if(event.key === "Tab"){
-        event.preventDefault();
-
-        const start = code.selectionStart;
-        const end = code.selectionEnd;
-
-        code.value =
-            code.value.substring(0,start) +
-            "    " +
-            code.value.substring(end);
-
-        code.selectionStart = code.selectionEnd = start + 4;
-
-        updateStats();
-    }
-});
-
-createBtn.addEventListener("click",async()=>{
-    const source = code.value;
-
-    if(!source.trim()){
-        showStatus("Code is empty.",true);
         return;
     }
 
-    createBtn.disabled = true;
-    hideResult();
-    showStatus("Creating request...");
+    button.disabled = true;
 
-    try{
-        const response = await fetch(API_URL,{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                code:source
-            })
-        });
+    button.textContent = "GENERATING...";
 
-        const data = await response.json().catch(()=>{
-            return {};
-        });
+    output.classList.remove("show");
 
-        if(!response.ok || !data.success){
+    showStatus(
+        "Создание защищённого скрипта...",
+        false
+    );
+
+    try {
+
+        const response = await fetch(
+            CREATOR_WORKER + "/create",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    code: source
+                })
+            }
+        );
+
+        let data;
+
+        try {
+            data = await response.json();
+        } catch {
             throw new Error(
-                data.error ||
-                `Request failed with status ${response.status}`
+                "Worker вернул некорректный ответ."
             );
         }
 
-        requestId.textContent = data.id || "—";
-        requestLines.textContent =
-            typeof data.lineCount === "number"
-                ? data.lineCount.toLocaleString()
-                : "—";
+        if (!response.ok || !data.success) {
 
-        requestSize.textContent =
-            typeof data.size === "number"
-                ? formatBytes(data.size)
-                : "—";
+            throw new Error(
+                data.error ||
+                data.details ||
+                "Worker error " + response.status
+            );
+        }
 
-        loader.textContent = data.loader || "";
+        if (!data.code) {
+            throw new Error(
+                "Worker не вернул LocalScript."
+            );
+        }
 
-        result.classList.add("show");
+        result.value = data.code;
 
-        showStatus("Request created successfully.");
+        output.classList.add("show");
 
-        result.scrollIntoView({
-            behavior:"smooth",
-            block:"nearest"
-        });
-
-    }catch(error){
         showStatus(
-            error instanceof Error
-                ? error.message
-                : String(error),
+            "Готово. LocalScript создан.",
+            false,
             true
         );
-    }finally{
-        createBtn.disabled = false;
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            error.message ||
+            "Ошибка соединения с Worker.",
+            true
+        );
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent = "GENERATE";
     }
-});
+}
 
-clearBtn.addEventListener("click",()=>{
-    code.value = "";
-    hideStatus();
-    hideResult();
-    updateStats();
-    code.focus();
-});
+function showStatus(
+    message,
+    error = false,
+    success = false
+) {
 
-copyBtn.addEventListener("click",async()=>{
-    const value = loader.textContent;
+    const status =
+        document.getElementById("status");
 
-    if(!value){
+    status.textContent = message;
+
+    status.classList.add("show");
+
+    status.classList.toggle(
+        "error",
+        error
+    );
+
+    status.classList.toggle(
+        "success",
+        success
+    );
+}
+
+async function copyResult() {
+
+    const result =
+        document.getElementById("result");
+
+    if (!result.value) {
         return;
     }
 
-    try{
-        await navigator.clipboard.writeText(value);
+    try {
 
-        const oldText = copyBtn.textContent;
-        copyBtn.textContent = "COPIED";
+        await navigator.clipboard.writeText(
+            result.value
+        );
 
-        setTimeout(()=>{
-            copyBtn.textContent = oldText;
-        },1200);
+        showStatus(
+            "LocalScript скопирован.",
+            false,
+            true
+        );
 
-    }catch{
-        const area = document.createElement("textarea");
-        area.value = value;
-        document.body.appendChild(area);
-        area.select();
+    } catch {
+
+        result.select();
+
         document.execCommand("copy");
-        area.remove();
 
-        const oldText = copyBtn.textContent;
-        copyBtn.textContent = "COPIED";
-
-        setTimeout(()=>{
-            copyBtn.textContent = oldText;
-        },1200);
+        showStatus(
+            "LocalScript скопирован.",
+            false,
+            true
+        );
     }
-});
+}
 
-updateStats();
+function clearAll() {
+
+    document.getElementById("source").value = "";
+
+    document.getElementById("result").value = "";
+
+    document.getElementById("output")
+        .classList.remove("show");
+
+    document.getElementById("status")
+        .classList.remove("show");
+}
+
 </script>
 
 </body>
