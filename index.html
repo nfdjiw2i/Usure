@@ -1,1109 +1,475 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>USURE Obfuscator</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>USURE | Obfuscator</title>
 <style>
+:root{color-scheme:dark;--bg:#08090d;--panel:#101218;--panel2:#151821;--border:#252936;--text:#f2f3f7;--muted:#8c92a3;--accent:#9270ff;--accent2:#7151e8;--green:#58d6a0;--red:#ff697d}
 *{box-sizing:border-box}
-
-html,body{
-    margin:0;
-    min-height:100%;
-    background:#050505;
-    color:#eee;
-    font-family:Arial,Helvetica,sans-serif
-}
-
-body{
-    padding:35px 18px
-}
-
-.container{
-    width:min(1150px,100%);
-    margin:auto
-}
-
-.header{
-    margin-bottom:24px
-}
-
-.logo{
-    font-size:30px;
-    font-weight:800;
-    letter-spacing:5px
-}
-
-.sub{
-    margin-top:7px;
-    color:#666;
-    font-size:11px;
-    letter-spacing:2px
-}
-
-.panel{
-    background:#0b0b0b;
-    border:1px solid #202020;
-    border-radius:12px;
-    padding:18px;
-    box-shadow:0 20px 60px rgba(0,0,0,.4)
-}
-
-.label{
-    display:block;
-    margin-bottom:9px;
-    color:#777;
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1.5px
-}
-
-textarea{
-    display:block;
-    width:100%;
-    min-height:430px;
-    resize:vertical;
-    padding:16px;
-    border:1px solid #222;
-    border-radius:9px;
-    outline:none;
-    background:#070707;
-    color:#eee;
-    font-family:Consolas,Monaco,monospace;
-    font-size:13px;
-    line-height:1.55
-}
-
-textarea:focus{
-    border-color:#3a3a3a
-}
-
-.actions{
-    display:flex;
-    gap:9px;
-    margin-top:12px
-}
-
-button{
-    padding:11px 19px;
-    border:1px solid #303030;
-    border-radius:8px;
-    background:#151515;
-    color:#eee;
-    font-size:12px;
-    font-weight:700;
-    cursor:pointer;
-    transition:.15s
-}
-
-button:hover{
-    background:#202020;
-    border-color:#444
-}
-
-button:active{
-    transform:scale(.98)
-}
-
-.primary{
-    background:#eee;
-    color:#050505;
-    border-color:#eee
-}
-
-.primary:hover{
-    background:#d4d4d4;
-    border-color:#d4d4d4
-}
-
-button:disabled{
-    opacity:.45;
-    cursor:not-allowed
-}
-
-.status{
-    display:none;
-    margin-top:12px;
-    padding:11px 13px;
-    border:1px solid #222;
-    border-radius:8px;
-    background:#0e0e0e;
-    color:#888;
-    font-size:12px
-}
-
-.status.show{
-    display:block
-}
-
-.status.error{
-    color:#ff7777;
-    border-color:#3a1b1b;
-    background:#120909
-}
-
-.status.success{
-    color:#bdbdbd
-}
-
-.output{
-    display:none;
-    margin-top:20px
-}
-
-.output.show{
-    display:block
-}
-
-.outputHeader{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:9px
-}
-
-.outputTitle{
-    color:#777;
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:1.5px
-}
-
-.copy{
-    padding:8px 13px;
-    font-size:11px
-}
-
-.output textarea{
-    min-height:260px;
-    white-space:pre;
-    overflow:auto
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:9px;
-    margin-top:16px
-}
-
-.stat{
-    background:#090909;
-    border:1px solid #1b1b1b;
-    border-radius:8px;
-    padding:12px
-}
-
-.statTitle{
-    color:#555;
-    font-size:9px;
-    font-weight:700;
-    letter-spacing:1px
-}
-
-.statValue{
-    margin-top:5px;
-    color:#ccc;
-    font-size:12px
-}
-
-.footer{
-    margin-top:18px;
-    text-align:center;
-    color:#393939;
-    font-size:10px;
-    letter-spacing:1px
-}
-
-@media(max-width:700px){
-    body{
-        padding:20px 10px
-    }
-
-    .panel{
-        padding:13px
-    }
-
-    .actions{
-        flex-direction:column
-    }
-
-    button{
-        width:100%
-    }
-
-    .stats{
-        grid-template-columns:1fr 1fr
-    }
-
-    textarea{
-        min-height:350px
-    }
-}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -20%,#292044 0,transparent 48%),var(--bg);color:var(--text);font:14px/1.5 Inter,Segoe UI,Arial,sans-serif}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.app{max-width:1050px;margin:0 auto;padding:28px 22px 50px}
+header{display:flex;align-items:center;justify-content:space-between;padding:10px 0 30px;border-bottom:1px solid var(--border);gap:18px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:43px;height:43px;border:1px solid #604caa;border-radius:13px;background:linear-gradient(145deg,#30244f,#151320);display:grid;place-items:center;font-weight:900;font-size:19px;color:#c9b9ff;box-shadow:0 0 30px #7856ff20}
+.brand-name{font-size:18px;font-weight:800;letter-spacing:2px}
+.brand-sub{font-size:11px;color:var(--muted);letter-spacing:1.5px}
+.status{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px #58d6a066}
+.hero{padding:35px 0 25px}
+.eyebrow{color:#b7a4ff;font-size:11px;letter-spacing:2px;font-weight:700}
+h1{font-size:clamp(27px,5vw,39px);line-height:1.2;margin:10px 0 12px;letter-spacing:-1.2px}
+.hero p{color:var(--muted);max-width:650px;margin:0}
+.panel{background:linear-gradient(180deg,#12151d,#0e1016);border:1px solid var(--border);border-radius:17px;overflow:hidden;box-shadow:0 22px 80px #0003}
+.panel-head{padding:17px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.panel-title{font-size:13px;font-weight:750;letter-spacing:.3px}
+.panel-caption{font-size:11px;color:var(--muted)}
+.editor-wrap{padding:18px}
+.editor-label{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px;color:#cbd0dc;font-size:12px}
+textarea{width:100%;resize:vertical;min-height:230px;background:#090b10;border:1px solid #282d3a;border-radius:11px;padding:15px;color:#e0e4ef;outline:none;font:13px/1.65 Consolas,Monaco,monospace;tab-size:4;transition:border .2s}
+textarea:focus{border-color:#765bd0;box-shadow:0 0 0 3px #9270ff12}
+textarea::placeholder{color:#555c6d}
+.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.btn{border:1px solid var(--border);border-radius:9px;padding:11px 16px;background:#191c25;color:#e7e9f0;font-weight:650;transition:.18s}
+.btn:hover{background:#222632;border-color:#41475a}
+.btn-primary{border-color:transparent;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;min-width:190px;box-shadow:0 6px 22px #7955ff26}
+.btn-primary:hover{background:linear-gradient(135deg,#a18aff,#8062f5);transform:translateY(-1px)}
+.btn:disabled{opacity:.5;cursor:wait;transform:none}
+.meta{margin-left:auto;color:var(--muted);font-size:11px}
+.result{margin-top:18px}
+.result-body{padding:18px}
+.result-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.result-title{font-weight:750}
+.badge{font-size:10px;padding:4px 8px;border-radius:6px;background:#1d332c;color:#80e5b9;letter-spacing:.6px}
+#output{min-height:125px;max-height:310px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;resize:vertical}
+#message{display:none;margin-top:14px;border:1px solid var(--border);background:#151821;padding:12px 14px;border-radius:9px;color:var(--muted);font-size:12px;overflow-wrap:anywhere}
+#message.error{display:block;color:#ff9ba8;border-color:#63303a;background:#241319}
+#message.success{display:block;color:#8be4b7;border-color:#245341;background:#10231c}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.info{border:1px solid var(--border);border-radius:12px;background:#101219;padding:15px}
+.info-num{font-size:18px;font-weight:800;color:#c5b5ff}
+.info-title{font-weight:700;font-size:12px;margin:6px 0 3px}
+.info-text{color:var(--muted);font-size:11px}
+footer{margin-top:28px;padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#686f80;font-size:11px}
+@media(max-width:650px){.app{padding:16px 13px 30px}header{padding-bottom:20px}.hero{padding-top:25px}.editor-wrap,.result-body{padding:12px}.info-grid{grid-template-columns:1fr}.btn-primary{width:100%}.meta{margin-left:0;width:100%}.status{display:none}}
 </style>
 </head>
-
 <body>
+<div class="app">
+<header>
+<div class="brand">
+<div class="logo">U</div>
+<div>
+<div class="brand-name">USURE</div>
+<div class="brand-sub">CODE PROTECTION SYSTEM</div>
+</div>
+</div>
+<div class="status"><span class="dot"></span> Creator configured</div>
+</header>
 
-<div class="container">
+<section class="hero">
+<div class="eyebrow">LUA / OBFUSCATION</div>
+<h1>Protect your code.</h1>
+<p>Многоуровневая обфускация Lua, перемешивание данных и генерация компактного загрузчика через USURE Attacher.</p>
+</section>
 
-    <div class="header">
-        <div class="logo">USURE</div>
-        <div class="sub">SECURE SCRIPT DELIVERY SYSTEM</div>
-    </div>
+<section class="panel">
+<div class="panel-head">
+<div>
+<div class="panel-title">Source editor</div>
+<div class="panel-caption">Вставь исходный Lua-код</div>
+</div>
+<div class="panel-caption">UTF-8 · Lua</div>
+</div>
+<div class="editor-wrap">
+<div class="editor-label">
+<label for="source">Исходный код</label>
+<span id="sourceCount">0 символов</span>
+</div>
+<textarea id="source" spellcheck="false" placeholder="print(1)"></textarea>
+<div class="actions">
+<button class="btn btn-primary" id="generate">Обфусцировать и создать</button>
+<button class="btn" id="clear">Очистить</button>
+<span class="meta" id="progress">Готов к работе</span>
+</div>
+<div id="message"></div>
+</div>
+</section>
 
-    <div class="panel">
+<section class="panel result">
+<div class="panel-head">
+<div>
+<div class="panel-title">Generated loader</div>
+<div class="panel-caption">Однострочный результат</div>
+</div>
+<div class="badge">SINGLE LINE</div>
+</div>
+<div class="result-body">
+<div class="result-top">
+<div class="result-title">Защищённый Lua-код</div>
+<button class="btn" id="copy" disabled>Копировать</button>
+</div>
+<textarea id="output" readonly spellcheck="false" placeholder="Результат появится здесь после генерации..."></textarea>
+<div class="actions">
+<button class="btn" id="download" disabled>Скачать .lua</button>
+<span class="meta" id="outputCount">0 символов</span>
+</div>
+</div>
+</section>
 
-        <label class="label">Lua Source</label>
+<div class="info-grid">
+<div class="info"><div class="info-num">02×</div><div class="info-title">Base34 layers</div><div class="info-text">Два слоя кодирования с разными ключами.</div></div>
+<div class="info"><div class="info-num">RND</div><div class="info-title">Randomized layout</div><div class="info-text">Случайные имена переменных и порядок фрагментов.</div></div>
+<div class="info"><div class="info-num">AES</div><div class="info-title">Server storage</div><div class="info-text">Worker хранит переданный код в зашифрованном виде.</div></div>
+</div>
 
-        <textarea
-            id="source"
-            spellcheck="false"
-            placeholder="Вставьте Lua код сюда..."
-        ></textarea>
-
-        <div class="actions">
-
-            <button
-                id="generate"
-                class="primary"
-                onclick="generate()"
-            >
-                GENERATE
-            </button>
-
-            <button onclick="clearAll()">
-                CLEAR
-            </button>
-
-        </div>
-
-        <div id="status" class="status"></div>
-
-        <div id="output" class="output">
-
-            <div class="outputHeader">
-
-                <div class="outputTitle">
-                    GENERATED SCRIPT
-                </div>
-
-                <button
-                    class="copy"
-                    onclick="copyResult()"
-                >
-                    COPY
-                </button>
-
-            </div>
-
-            <textarea
-                id="result"
-                readonly
-                spellcheck="false"
-            ></textarea>
-
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <div class="statTitle">
-                    ENCODING
-                </div>
-                <div class="statValue">
-                    BASE34 × 2
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="statTitle">
-                    TRANSFORM
-                </div>
-                <div class="statValue">
-                    XOR × 2
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="statTitle">
-                    SPLITTING
-                </div>
-                <div class="statValue">
-                    RANDOM
-                </div>
-            </div>
-
-            <div class="stat">
-                <div class="statTitle">
-                    OUTPUT
-                </div>
-                <div class="statValue">
-                    ONE LINE
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="footer">
-        USURE // PRIVATE CODE DELIVERY
-    </div>
-
+<footer><span>USURE Obfuscator</span><span>Code protection interface</span></footer>
 </div>
 
 <script>
+"use strict";
 
-const CREATOR_WORKER =
-    "https://noisy-meadow-1f83.lvlyvcbcla.workers.dev";
+const CREATOR_URL = "https://noisy-meadow-1f83.lvlyvcbcla.workers.dev/create";
+const ATTACHER_URL = "https://bold-darkness-4fdd.lvlyvcbcla.workers.dev/activate";
+const ALPHABET = "0123456789abcdefghijklmnopqrstuvwx";
+const utf8 = new TextEncoder();
 
-const ATTACHER_WORKER =
-    "https://bold-darkness-4fdd.lvlyvcbcla.workers.dev";
+const sourceEl = document.getElementById("source");
+const outputEl = document.getElementById("output");
+const generateBtn = document.getElementById("generate");
+const copyBtn = document.getElementById("copy");
+const downloadBtn = document.getElementById("download");
+const messageEl = document.getElementById("message");
+const progressEl = document.getElementById("progress");
 
-const BASE34 =
-    "0123456789abcdefghijklmnopqrstuvwx";
-
-function randomInt(min,max){
-    return Math.floor(
-        Math.random()*(max-min+1)
-    )+min;
+function showMessage(text, type) {
+    messageEl.textContent = text;
+    messageEl.className = type || "";
+    messageEl.style.display = "block";
 }
 
-function randomIdentifier(){
-    const first =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    const rest =
-        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    let result =
-        first[randomInt(0,first.length-1)];
-
-    const length =
-        randomInt(5,11);
-
-    for(let i=1;i<length;i++){
-        result +=
-            rest[randomInt(0,rest.length-1)];
-    }
-
-    return result;
+function clearMessage() {
+    messageEl.textContent = "";
+    messageEl.className = "";
+    messageEl.style.display = "none";
 }
 
-function uniqueIdentifiers(count){
-    const set=new Set();
-
-    while(set.size<count){
-        set.add(randomIdentifier());
-    }
-
-    return Array.from(set);
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function base34EncodeByte(value){
-    return (
-        BASE34[Math.floor(value/34)] +
-        BASE34[value%34]
-    );
+function randomKey() {
+    return randomInt(1, 255);
 }
 
-function encodeLayer(bytes,key){
-
-    let output="";
-
-    for(let i=0;i<bytes.length;i++){
-
-        const value =
-            bytes[i]^key;
-
-        output +=
-            base34EncodeByte(value);
-    }
-
-    return output;
-}
-
-function shuffle(array){
-
-    const result=array.slice();
-
-    for(let i=result.length-1;i>0;i--){
-
-        const j=
-            randomInt(0,i);
-
-        const temp=result[i];
-
-        result[i]=result[j];
-        result[j]=temp;
-    }
-
-    return result;
-}
-
-function bytesFromString(text){
-
-    return Array.from(
-        new TextEncoder().encode(text)
-    );
-}
-
-function buildObfuscatedLua(source){
-
-    const key1 =
-        randomInt(1,255);
-
-    const key2 =
-        randomInt(1,255);
-
-    const originalBytes =
-        bytesFromString(source);
-
-    const layer1 =
-        encodeLayer(
-            originalBytes,
-            key1
-        );
-
-    const layer1Bytes =
-        Array.from(
-            new TextEncoder().encode(layer1)
-        );
-
-    const layer2 =
-        encodeLayer(
-            layer1Bytes,
-            key2
-        );
-
-    const chunkSizeMin=24;
-    const chunkSizeMax=72;
-
-    const chunks=[];
-
-    let position=0;
-
-    while(position<layer2.length){
-
-        const size=
-            randomInt(
-                chunkSizeMin,
-                chunkSizeMax
-            );
-
-        chunks.push(
-            layer2.slice(
-                position,
-                position+size
-            )
-        );
-
-        position += size;
-    }
-
-    const indexes =
-        chunks.map(
-            (_,i)=>i+1
-        );
-
-    const shuffledIndexes =
-        shuffle(indexes);
-
-    const names =
-        uniqueIdentifiers(10);
-
-    const alphabetName=names[0];
-    const partsName=names[1];
-    const orderName=names[2];
-    const encodedName=names[3];
-    const decodeName=names[4];
-    const firstName=names[5];
-    const secondName=names[6];
-    const byteName=names[7];
-    const resultName=names[8];
-    const funcName=names[9];
-
-    let lua="";
-
-    lua+="local "+
-        alphabetName+
-        '="'+
-        BASE34+
-        '";';
-
-    lua+="local "+
-        firstName+
-        "="+
-        key1+
-        ";";
-
-    lua+="local "+
-        secondName+
-        "="+
-        key2+
-        ";";
-
-    lua+="local "+
-        partsName+
-        "={};";
-
-    for(let i=0;i<shuffledIndexes.length;i++){
-
-        const originalIndex =
-            shuffledIndexes[i];
-
-        const chunk =
-            chunks[originalIndex-1];
-
-        const fakePosition =
-            originalIndex;
-
-        lua+=
-            partsName+
-            "["+
-            fakePosition+
-            "]="+
-            JSON.stringify(chunk)+
-            ";";
-    }
-
-    lua+="local "+
-        orderName+
-        "={";
-
-    for(let i=0;i<indexes.length;i++){
-
-        lua+=
-            indexes[i];
-
-        if(i<indexes.length-1){
-            lua+=",";
+function randomName(used) {
+    const first = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const rest = first + "0123456789";
+    let name;
+    do {
+        name = first[randomInt(0, first.length - 1)];
+        for (let i = 0, n = randomInt(7, 12); i < n; i++) {
+            name += rest[randomInt(0, rest.length - 1)];
         }
+    } while (used.has(name));
+    used.add(name);
+    return name;
+}
+
+function xorByte(value, key) {
+    let result = 0;
+    let bit = 1;
+    let a = value;
+    let b = key;
+
+    while (a > 0 || b > 0) {
+        const aa = a % 2;
+        const bb = b % 2;
+        if (aa !== bb) result += bit;
+        a = Math.floor(a / 2);
+        b = Math.floor(b / 2);
+        bit *= 2;
     }
 
-    lua+="};";
+    return result;
+}
 
-    lua+="local "+
-        encodedName+
-        '="";';
+function encodeBase34(bytes, key) {
+    let result = "";
+    for (const byte of bytes) {
+        const value = xorByte(byte, key);
+        result += ALPHABET[Math.floor(value / 34)];
+        result += ALPHABET[value % 34];
+    }
+    return result;
+}
 
-    lua+="for "+
-        firstName+
-        "=1,#"+
-        orderName+
-        " do "+
-        encodedName+
-        "="
-        +encodedName+
-        "+"
-        +partsName+
-        "["
-        +orderName+
-        "["
-        +firstName+
-        "]];"
-        +"end;";
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = randomInt(0, i);
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
-    lua+="local "+
-        decodeName+
-        "=function("+
-        byteName+
-        ","+
-        resultName+
-        ")";
+function luaString(value) {
+    return '"' + value.replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\n/g, "\\n").replace(/\r/g, "\\r") + '"';
+}
 
-    lua+="local "+
-        funcName+
-        "=\"\";";
+function splitIntoChunks(text) {
+    const pairs = [];
+    for (let i = 0; i < text.length; i += 2) {
+        pairs.push(text.slice(i, i + 2));
+    }
 
-    lua+="for "+
-        firstName+
-        "=1,#"+
-        byteName+
-        ",2 do";
+    const chunks = [];
+    let index = 0;
 
-    lua+="local "+
-        secondName+
-        "=string.byte("+
-        byteName+
-        ","
-        +firstName+
-        ");";
+    while (index < pairs.length) {
+        const count = randomInt(12, 36);
+        chunks.push(pairs.slice(index, index + count).join(""));
+        index += count;
+    }
 
-    lua+="local "+
-        resultName+
-        "=string.byte("+
-        byteName+
-        ","
-        +firstName+
-        "+1);";
+    return chunks;
+}
 
-    lua+="local "+
-        alphabetName+
-        "=string.byte("+
-        byteName+
-        ","
-        +firstName+
-        ");";
+function makeLuaObfuscation(source) {
+    const bytes = utf8.encode(source);
+    if (!bytes.length) throw new Error("Исходный код пуст.");
 
-    lua+="local "+
-        byteName+
-        "=string.byte("+
-        byteName+
-        ","
-        +firstName+
-        ");";
+    const key1 = randomKey();
+    const key2 = randomKey();
 
-    lua+="local "+
-        funcName+
-        "=0;";
+    const layer1 = encodeBase34(bytes, key1);
+    const layer2 = encodeBase34(utf8.encode(layer1), key2);
 
-    lua+="if "+
-        byteName+
-        ">=48 and "+
-        byteName+
-        "<=57 then ";
+    const originalChunks = splitIntoChunks(layer2);
+    const shuffledChunks = shuffle(originalChunks.slice());
 
-    lua+=
-        funcName+
-        "="+
-        byteName+
-        "-48;";
+    const order = originalChunks.map(chunk => shuffledChunks.indexOf(chunk) + 1);
 
-    lua+="else ";
+    const used = new Set();
+    const names = {
+        alphabet: randomName(used),
+        parts: randomName(used),
+        order: randomName(used),
+        encoded: randomName(used),
+        bx: randomName(used),
+        val: randomName(used),
+        dec: randomName(used),
+        str: randomName(used),
+        key: randomName(used),
+        out: randomName(used),
+        i: randomName(used),
+        a: randomName(used),
+        b: randomName(used),
+        p: randomName(used),
+        n: randomName(used),
+        source: randomName(used),
+        fn: randomName(used)
+    };
 
-    lua+=
-        funcName+
-        "="+
-        byteName+
-        "-87;";
+    const n = names;
 
-    lua+="end;";
+    const partEntries = shuffledChunks
+        .map((chunk, i) => "[" + (i + 1) + "]=" + luaString(chunk))
+        .join(",");
 
-    lua+="local "+
-        byteName+
-        "=string.byte("+
-        byteName+
-        ","
-        +firstName+
-        "+1);";
+    const orderEntries = order.join(",");
 
-    lua+="local "+
-        alphabetName+
-        "=0;";
-
-    lua+="if "+
-        byteName+
-        ">=48 and "+
-        byteName+
-        "<=57 then ";
-
-    lua+=
-        alphabetName+
-        "="+
-        byteName+
-        "-48;";
-
-    lua+="else ";
-
-    lua+=
-        alphabetName+
-        "="+
-        byteName+
-        "-87;";
-
-    lua+="end;";
-
-    lua+=
-        resultName+
-        "="+
-        resultName+
-        "..string.char(( "+
-        funcName+
-        "*34+"+
-        alphabetName+
-        ")%256);";
-
-    lua+="end;";
-
-    lua+="return "+
-        resultName+
-        ";";
-
-    lua+="end;";
-
-    lua+="local "+
-        byteName+
-        "="+
-        decodeName+
-        "("+
-        encodedName+
-        ","+
-        firstName+
-        ");";
-
-    lua+="local "+
-        resultName+
-        "=decodeLayer2;";
-
-    lua+="local "+
-        alphabetName+
-        "=function("+
-        byteName+
-        ","+
-        firstName+
-        ")";
-
-    lua+="local "+
-        resultName+
-        '="";';
-
-    lua+="for "+
-        secondName+
-        "=1,#"+
-        byteName+
-        ",2 do";
-
-    lua+="local "+
-        funcName+
-        "=string.byte("+
-        byteName+
-        ","
-        +secondName+
-        ");";
-
-    lua+="local "+
-        encodedName+
-        "=string.byte("+
-        byteName+
-        ","
-        +secondName+
-        "+1);";
-
-    lua+="local "+
-        partsName+
-        "=funcName;";
-
-    lua+="local "+
-        orderName+
-        "=encodedName;";
-
-    lua+="if "+
-        partsName+
-        ">=48 and "+
-        partsName+
-        "<=57 then ";
-
-    lua+=
-        partsName+
-        "="+
-        partsName+
-        "-48;";
-
-    lua+="else ";
-
-    lua+=
-        partsName+
-        "="+
-        partsName+
-        "-87;";
-
-    lua+="end;";
-
-    lua+="if "+
-        orderName+
-        ">=48 and "+
-        orderName+
-        "<=57 then ";
-
-    lua+=
-        orderName+
-        "="
-        +orderName+
-        "-48;";
-
-    lua+="else ";
-
-    lua+=
-        orderName+
-        "="
-        +orderName+
-        "-87;";
-
-    lua+="end;";
-
-    lua+=
-        resultName+
-        "="
-        +resultName+
-        "..string.char((("
-        +partsName+
-        "*34+"
-        +orderName+
-        ")%256)^"
-        +firstName+
-        ");";
-
-    lua+="end;";
-
-    lua+="return "+
-        resultName+
-        ";";
-
-    lua+="end;";
-
-    lua+="local "+
-        funcName+
-        "="+
-        alphabetName+
-        "("+
-        byteName+
-        ","+
-        secondName+
-        ");";
-
-    lua+="local "+
-        resultName+
-        "={};";
-
-    lua+="for "+
-        firstName+
-        "=1,#"+
-        funcName+
-        " do ";
-
-    lua+="local "+
-        alphabetName+
-        "=string.byte("+
-        funcName+
-        ","
-        +firstName+
-        ")^"+
-        firstName+
-        ";";
-
-    lua+=
-        resultName+
-        "[#"+
-        resultName+
-        "+1]=string.char("+
-        alphabetName+
-        ");";
-
-    lua+="end;";
-
-    lua+="local "+
-        byteName+
-        "=table.concat("+
-        resultName+
-        ");";
-
-    lua+="local "+
-        firstName+
-        "=loadstring("+
-        byteName+
-        ");";
-
-    lua+="if "+
-        firstName+
-        " then ";
-
-    lua+="pcall("+
-        firstName+
-        ");";
-
-    lua+="end;";
+    const lua = [
+        "local " + n.alphabet + "=" + luaString(ALPHABET),
+        "local " + n.parts + "={" + partEntries + "}",
+        "local " + n.order + "={" + orderEntries + "}",
+        "local function " + n.bx + "(" + n.a + "," + n.b + ")",
+        "local " + n.val + "=0;local " + n.p + "=1",
+        "while " + n.a + ">0 or " + n.b + ">0 do",
+        "local " + n.i + "=" + n.a + "%2;local " + n.n + "=" + n.b + "%2",
+        "if " + n.i + "~=" + n.n + " then " + n.val + "=" + n.val + "+" + n.p + " end",
+        n.a + "=math.floor(" + n.a + "/2);" + n.b + "=math.floor(" + n.b + "/2);" + n.p + "=" + n.p + "*2",
+        "end;return " + n.val,
+        "end",
+        "local function " + n.dec + "(" + n.str + "," + n.key + ")",
+        "local " + n.out + "={};local " + n.n + "=1",
+        "for " + n.i + "=1,#" + n.str + ",2 do",
+        "local function " + n.val + "(" + n.a + ")",
+        "local " + n.b + "=string.byte(" + n.a + ")",
+        "if " + n.b + ">=48 and " + n.b + "<=57 then return " + n.b + "-48 end",
+        "return " + n.b + "-87",
+        "end",
+        "local " + n.a + "=" + n.val + "(string.sub(" + n.str + "," + n.i + "," + n.i + "))*34+" + n.val + "(string.sub(" + n.str + "," + n.i + "+1," + n.i + "+1))",
+        n.out + "[" + n.n + "]=string.char(" + n.bx + "(" + n.a + "," + n.key + "));" + n.n + "=" + n.n + "+1",
+        "end",
+        "return table.concat(" + n.out + ")",
+        "end",
+        "local " + n.encoded + "={}",
+        "for " + n.i + "=1,#" + n.order + " do " + n.encoded + "[" + n.i + "]=" + n.parts + "[" + n.order + "[" + n.i + "]] end",
+        "local " + n.str + "=table.concat(" + n.encoded + ")",
+        "local " + n.source + "=" + n.dec + "(" + n.dec + "(" + n.str + "," + key2 + ")," + key1 + ")",
+        "local " + n.fn + "=loadstring(" + n.source + ")",
+        "if not " + n.fn + " then error('USURE: Lua compilation failed') end",
+        "local " + n.a + "," + n.b + "=pcall(" + n.fn + ")",
+        "if not " + n.a + " then error(" + n.b + ") end"
+    ].join(";");
 
     return lua;
 }
 
-function showStatus(text,error=false,success=false){
+function makeLoader(token) {
+    const used = new Set();
+    const n = {
+        h: randomName(used),
+        r: randomName(used),
+        u: randomName(used),
+        t: randomName(used),
+        s: randomName(used),
+        d: randomName(used),
+        f: randomName(used),
+        e: randomName(used),
+        q: randomName(used),
+        v: randomName(used),
+        w: randomName(used)
+    };
 
-    const status=
-        document.getElementById("status");
-
-    status.textContent=text;
-
-    status.className="status show";
-
-    if(error){
-        status.classList.add("error");
+    const urlPieces = [];
+    for (let i = 0; i < ATTACHER_URL.length; i += randomInt(5, 10)) {
+        urlPieces.push(ATTACHER_URL.slice(i, i + randomInt(5, 10)));
     }
 
-    if(success){
-        status.classList.add("success");
+    const fixedUrlPieces = [];
+    for (let i = 0; i < ATTACHER_URL.length;) {
+        const size = randomInt(4, 9);
+        fixedUrlPieces.push(ATTACHER_URL.slice(i, i + size));
+        i += size;
     }
+
+    const tokenPieces = [];
+    for (let i = 0; i < token.length;) {
+        const size = randomInt(5, 11);
+        tokenPieces.push(token.slice(i, i + size));
+        i += size;
+    }
+
+    const joinPieces = pieces => "table.concat({" + pieces.map(luaString).join(",") + "})";
+
+    return [
+        "local " + n.h + "=game:GetService(" + luaString("HttpService") + ")",
+        "local " + n.r + "=request or http_request or (syn and syn.request)",
+        "if not " + n.r + " then error(" + luaString("USURE: HTTP request unavailable") + ") end",
+        "local " + n.u + "=" + joinPieces(fixedUrlPieces),
+        "local " + n.t + "=" + joinPieces(tokenPieces),
+        "local " + n.s + "=" + n.r + "({Url=" + n.u + ",Method=" + luaString("POST") + ",Headers={[" + luaString("Content-Type") + "]=" + luaString("application/json") + "},Body=" + n.h + ":JSONEncode({token=" + n.t + "})})",
+        "local " + n.e + "=" + n.s + " and (" + n.s + ".StatusCode or " + n.s + ".Status or " + n.s + ".status_code)",
+        "if " + n.e + "~=200 then error(" + luaString("USURE activation failed: ") + "..tostring(" + n.e + ")) end",
+        "local " + n.d + "=" + n.h + ":JSONDecode(" + n.s + ".Body or " + n.s + ".body)",
+        "if not " + n.d + " or not " + n.d + ".success or type(" + n.d + ".code)~=" + luaString("string") + " then error(" + luaString("USURE invalid response: ") + "..tostring(" + n.d + " and " + n.d + ".error)) end",
+        "local " + n.f + "=loadstring(" + n.d + ".code)",
+        "if not " + n.f + " then error(" + luaString("USURE: returned Lua compilation failed") + ") end",
+        "local " + n.v + "," + n.w + "=pcall(" + n.f + ")",
+        "if not " + n.v + " then error(" + n.w + ") end"
+    ].join(";");
 }
 
-async function generate(){
+async function createProtectedCode(source) {
+    const obfuscatedSource = makeLuaObfuscation(source);
 
-    const source=
-        document.getElementById("source").value;
+    const response = await fetch(CREATOR_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: obfuscatedSource })
+    });
 
-    const result=
-        document.getElementById("result");
+    const text = await response.text();
+    let data;
 
-    const output=
-        document.getElementById("output");
+    try {
+        data = JSON.parse(text);
+    } catch {
+        throw new Error("Creator вернул не JSON. HTTP " + response.status + ": " + text.slice(0, 300));
+    }
 
-    const button=
-        document.getElementById("generate");
+    if (!response.ok || !data.success || !data.token) {
+        throw new Error((data.error || "Creator error") + (data.details ? ": " + data.details : ""));
+    }
 
-    if(!source.trim()){
+    return makeLoader(data.token);
+}
 
-        showStatus(
-            "Вставьте Lua код.",
-            true
-        );
+sourceEl.addEventListener("input", () => {
+    document.getElementById("sourceCount").textContent = sourceEl.value.length.toLocaleString("ru-RU") + " символов";
+});
 
+generateBtn.addEventListener("click", async () => {
+    clearMessage();
+
+    const source = sourceEl.value;
+    if (!source.trim()) {
+        showMessage("Сначала вставь Lua-код.", "error");
+        sourceEl.focus();
         return;
     }
 
-    button.disabled=true;
+    generateBtn.disabled = true;
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    outputEl.value = "";
+    progressEl.textContent = "Обфускация и сохранение...";
 
-    button.textContent="GENERATING...";
-
-    output.classList.remove("show");
-
-    try{
-
-        showStatus(
-            "Обфускация...",
-            false,
-            false
-        );
-
-        const obfuscated=
-            buildObfuscatedLua(source);
-
-        showStatus(
-            "Сохранение...",
-            false,
-            false
-        );
-
-        const response=
-            await fetch(
-                CREATOR_WORKER+"/create",
-                {
-                    method:"POST",
-                    headers:{
-                        "Content-Type":
-                            "application/json"
-                    },
-                    body:JSON.stringify({
-                        code:obfuscated
-                    })
-                }
-            );
-
-        let data;
-
-        try{
-            data=await response.json();
-        }catch{
-            throw new Error(
-                "Worker вернул некорректный ответ."
-            );
-        }
-
-        if(
-            !response.ok ||
-            !data.success
-        ){
-            throw new Error(
-                data.error ||
-                data.details ||
-                "Worker error "+response.status
-            );
-        }
-
-        if(!data.code){
-            throw new Error(
-                "Worker не вернул LocalScript."
-            );
-        }
-
-        result.value=
-            data.code;
-
-        output.classList.add("show");
-
-        showStatus(
-            "Готово. Скрипт создан.",
-            false,
-            true
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        showStatus(
-            error.message ||
-            "Ошибка генерации.",
-            true
-        );
-
-    }finally{
-
-        button.disabled=false;
-
-        button.textContent="GENERATE";
+    try {
+        const result = await createProtectedCode(source);
+        outputEl.value = result;
+        document.getElementById("outputCount").textContent = result.length.toLocaleString("ru-RU") + " символов";
+        copyBtn.disabled = false;
+        downloadBtn.disabled = false;
+        progressEl.textContent = "Готово";
+        showMessage("Код успешно создан и сохранён через Creator.", "success");
+    } catch (error) {
+        progressEl.textContent = "Ошибка";
+        showMessage(String(error.message || error), "error");
+    } finally {
+        generateBtn.disabled = false;
     }
-}
+});
 
-async function copyResult(){
+copyBtn.addEventListener("click", async () => {
+    if (!outputEl.value) return;
 
-    const result=
-        document.getElementById("result");
-
-    if(!result.value){
-        return;
-    }
-
-    try{
-
-        await navigator.clipboard.writeText(
-            result.value
-        );
-
-        showStatus(
-            "Скопировано.",
-            false,
-            true
-        );
-
-    }catch{
-
-        result.select();
-
+    try {
+        await navigator.clipboard.writeText(outputEl.value);
+    } catch {
+        outputEl.focus();
+        outputEl.select();
         document.execCommand("copy");
-
-        showStatus(
-            "Скопировано.",
-            false,
-            true
-        );
     }
-}
 
-function clearAll(){
+    copyBtn.textContent = "Скопировано";
+    setTimeout(() => copyBtn.textContent = "Копировать", 1400);
+});
 
-    document.getElementById("source").value="";
+downloadBtn.addEventListener("click", () => {
+    const blob = new Blob([outputEl.value], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "usure_protected.lua";
+    link.click();
+    URL.revokeObjectURL(link.href);
+});
 
-    document.getElementById("result").value="";
-
-    document.getElementById("output")
-        .classList.remove("show");
-
-    document.getElementById("status")
-        .className="status";
-}
-
+document.getElementById("clear").addEventListener("click", () => {
+    sourceEl.value = "";
+    outputEl.value = "";
+    document.getElementById("sourceCount").textContent = "0 символов";
+    document.getElementById("outputCount").textContent = "0 символов";
+    progressEl.textContent = "Готов к работе";
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    clearMessage();
+});
 </script>
-
 </body>
 </html>
+```
