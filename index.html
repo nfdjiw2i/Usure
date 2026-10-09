@@ -1,413 +1,292 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>USURE — Code Protection</title>
+<meta name="theme-color" content="#080808">
+<title>USURE</title>
 <style>
-:root{color-scheme:dark;--bg:#050505;--surface:#0d0d0d;--surface2:#141414;--border:#292929;--text:#f5f5f5;--muted:#929292;--white:#fff}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;font-size:14px;min-height:100vh}
+:root{color-scheme:dark;--bg:#080808;--panel:#101010;--border:#292929;--text:#f4f4f4;--muted:#858585;--white:#fff}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;min-height:100vh}
 button,textarea{font:inherit}
 button{cursor:pointer}
-button:focus-visible,textarea:focus-visible{outline:2px solid white;outline-offset:3px}
-.app{width:min(1050px,100%);margin:auto;padding:28px 22px 36px}
-header{height:65px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
-.brand{display:flex;align-items:center;gap:13px}
-.logo{width:40px;height:40px;border:1px solid #555;display:grid;place-items:center;font-size:20px;font-weight:900}
-.brand-name{font-size:17px;font-weight:850;letter-spacing:3px}
-.brand-sub{font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:4px}
-.status{font-size:11px;color:#bbb;display:flex;align-items:center;gap:8px}
-.status:before{content:"";width:6px;height:6px;background:#fff;border-radius:50%}
-.hero{padding:42px 0 26px}
-.eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;color:#aaa}
-h1{font-size:clamp(30px,5vw,46px);letter-spacing:-1.8px;line-height:1.1;margin:14px 0}
-.hero p{color:var(--muted);line-height:1.8;max-width:590px;margin:0}
-.panel{background:var(--surface);border:1px solid var(--border);margin-top:12px}
-.panel-head{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;border-bottom:1px solid var(--border);gap:12px}
-.panel-title{font-size:12px;font-weight:750;letter-spacing:1px;text-transform:uppercase}
-.panel-sub{font-size:11px;color:var(--muted);margin-top:5px}
-.tag{border:1px solid #393939;padding:5px 8px;font-size:9px;letter-spacing:1px;color:#bbb;white-space:nowrap}
-.editor{padding:18px}
-.field-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px;font-size:11px;color:#c8c8c8}
-textarea{display:block;width:100%;min-height:220px;resize:vertical;border:1px solid #303030;background:#070707;color:#eee;padding:15px;outline:none;font:12px/1.7 Consolas,Monaco,monospace;overflow-wrap:anywhere}
-textarea:focus{border-color:#888}
-textarea::placeholder{color:#555}
-.actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:13px}
-.btn{border:1px solid #444;background:#151515;color:#eee;padding:11px 15px;font-size:11px;font-weight:700;transition:background .15s,border .15s}
-.btn:hover{background:#252525;border-color:#777}
-.btn-primary{background:#fff;color:#000;border-color:#fff;min-width:190px}
-.btn-primary:hover{background:#ddd;color:#000}
-.btn:disabled{opacity:.4;cursor:not-allowed}
-.meta{font-size:10px;color:var(--muted);margin-left:auto}
-.result{margin-top:18px}
-.result-body{padding:18px}
-.result-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-.result-label{font-size:12px;font-weight:700}
-#output{min-height:120px;max-height:300px}
-#message{display:none;margin-top:12px;padding:12px;border:1px solid #444;background:#111;color:#ddd;font-size:11px;overflow-wrap:anywhere}
-#message.error{display:block;border-color:#777;color:#fff}
-#message.success{display:block;border-color:#555;color:#fff}
-.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.feature{border:1px solid var(--border);background:#0a0a0a;padding:17px}
-.feature-number{font-size:21px;font-weight:800}
-.feature-title{font-size:11px;font-weight:750;margin:10px 0 6px;letter-spacing:.5px}
-.feature-text{font-size:11px;line-height:1.7;color:var(--muted)}
-footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--border);margin-top:30px;padding-top:17px;color:#777;font-size:10px;letter-spacing:.5px}
-@media(max-width:600px){.app{padding:14px}.hero{padding-top:30px}.editor,.result-body{padding:12px}.features{grid-template-columns:1fr}.btn-primary{width:100%}.meta{margin-left:0;width:100%}.status{font-size:0}.status:before{font-size:initial}}
+.topbar{height:66px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 7%;background:#090909}
+.brand{font-size:19px;font-weight:800;letter-spacing:4px}
+.status{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:1px;color:var(--muted);text-transform:uppercase}
+.dot{height:7px;width:7px;border-radius:50%;background:#fff;box-shadow:0 0 9px #ffffff55}
+main{max-width:1050px;margin:0 auto;padding:64px 24px 80px}
+.heading{text-align:center;margin-bottom:44px}
+.heading h1{font-size:clamp(34px,6vw,55px);letter-spacing:5px;margin:0 0 14px;font-weight:800}
+.heading p{font-size:12px;letter-spacing:2px;color:var(--muted);margin:0;text-transform:uppercase}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{min-width:0;border:1px solid var(--border);background:var(--panel)}
+.panel-head{height:53px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 17px}
+.panel-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.panel-meta{font-size:10px;color:var(--muted);letter-spacing:1px}
+textarea{display:block;width:100%;height:340px;resize:vertical;background:#0b0b0b;color:#eee;border:0;outline:none;padding:18px;font-family:Consolas,Monaco,monospace;font-size:12px;line-height:1.7;tab-size:4}
+textarea::placeholder{color:#505050}
+textarea:focus{box-shadow:inset 0 0 0 1px #454545}
+.output-wrap{position:relative}
+.output-wrap textarea{height:340px}
+.actions{display:flex;gap:10px;margin-top:20px}
+button{height:46px;border:1px solid #383838;padding:0 20px;background:#151515;color:#fff;font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;transition:background .15s,border-color .15s}
+button:hover{background:#252525;border-color:#777}
+button:disabled{opacity:.45;cursor:wait}
+.primary{background:#fff;color:#050505;border-color:#fff;flex:1}
+.primary:hover{background:#dcdcdc;border-color:#dcdcdc}
+.secondary{min-width:120px}
+.message{margin-top:16px;min-height:18px;font-size:12px;line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
+.message.error{color:#ff7777}
+.message.success{color:#eee}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:44px}
+.info-card{border:1px solid var(--border);padding:17px}
+.info-card strong{display:block;font-size:10px;letter-spacing:1.5px;margin-bottom:9px}
+.info-card span{color:var(--muted);font-size:11px;line-height:1.6}
+footer{border-top:1px solid var(--border);padding:24px 7%;display:flex;justify-content:space-between;gap:16px;color:#686868;font-size:10px;letter-spacing:1.2px;text-transform:uppercase}
+@media(max-width:720px){main{padding:42px 15px 55px}.workspace{grid-template-columns:1fr}.heading{margin-bottom:30px}.info{grid-template-columns:1fr}.topbar{padding:0 18px}textarea,.output-wrap textarea{height:260px}footer{padding:22px 18px;flex-wrap:wrap}}
 </style>
 </head>
 <body>
-<div class="app">
-<header>
-<div class="brand">
-<div class="logo">U</div>
-<div>
-<div class="brand-name">USURE</div>
-<div class="brand-sub">CODE PROTECTION SYSTEM</div>
-</div>
-</div>
-<div class="status">SYSTEM READY</div>
+<header class="topbar">
+<div class="brand">USURE</div>
+<div class="status"><span class="dot"></span><span id="connectionStatus">SYSTEM READY</span></div>
 </header>
 
-<section class="hero">
-<div class="eyebrow">LUA / CODE PROTECTION</div>
-<h1>Protect your code.</h1>
-<p>Multi-layer encoding, randomized data layout and protected remote delivery in a single workflow.</p>
+<main>
+<section class="heading">
+<h1>USURE</h1>
+<p>Lua Protection System</p>
 </section>
 
-<section class="panel">
+<section class="workspace">
+<div class="panel">
 <div class="panel-head">
-<div>
-<div class="panel-title">Source Code</div>
-<div class="panel-sub">Enter your Lua source below</div>
+<span class="panel-title">Source Code</span>
+<span class="panel-meta" id="sourceCount">0 CHARS</span>
 </div>
-<div class="tag">LUA</div>
+<textarea id="source" spellcheck="false" autocomplete="off" autocapitalize="off" placeholder="Paste your Lua code here..."></textarea>
 </div>
-<div class="editor">
-<div class="field-head">
-<label for="source">SOURCE INPUT</label>
-<span id="sourceCount">0 CHARACTERS</span>
-</div>
-<textarea id="source" spellcheck="false" placeholder="print(1)"></textarea>
-<div class="actions">
-<button class="btn btn-primary" id="generate">GENERATE PROTECTED CODE</button>
-<button class="btn" id="clear">CLEAR</button>
-<span class="meta" id="progress">READY</span>
-</div>
-<div id="message"></div>
-</div>
-</section>
 
-<section class="panel result">
+<div class="panel">
 <div class="panel-head">
-<div>
-<div class="panel-title">Generated Output</div>
-<div class="panel-sub">Single-line Lua loader</div>
+<span class="panel-title">Protected Output</span>
+<span class="panel-meta" id="outputCount">0 CHARS</span>
 </div>
-<div class="tag">LUA</div>
-</div>
-<div class="result-body">
-<div class="result-top">
-<div class="result-label">PROTECTED LOADER</div>
-<button class="btn" id="copy" disabled>COPY CODE</button>
-</div>
-<textarea id="output" readonly spellcheck="false" placeholder="Generated output will appear here..."></textarea>
-<div class="actions">
-<button class="btn" id="download" disabled>DOWNLOAD LUA</button>
-<span class="meta" id="outputCount">0 CHARACTERS</span>
+<div class="output-wrap">
+<textarea id="output" spellcheck="false" readonly placeholder="Your protected loader will appear here..."></textarea>
 </div>
 </div>
 </section>
 
-<div class="features">
-<div class="feature"><div class="feature-number">02</div><div class="feature-title">ENCODING LAYERS</div><div class="feature-text">Two Base34 encoding layers with separate randomized keys.</div></div>
-<div class="feature"><div class="feature-number">RND</div><div class="feature-title">RANDOMIZED DATA</div><div class="feature-text">Random identifiers and shuffled data chunks.</div></div>
-<div class="feature"><div class="feature-number">AES</div><div class="feature-title">REMOTE STORAGE</div><div class="feature-text">Encrypted storage and token-based retrieval through Workers.</div></div>
+<div class="actions">
+<button class="primary" id="generate">PROTECT &amp; GENERATE</button>
+<button class="secondary" id="copy">COPY OUTPUT</button>
+<button class="secondary" id="clear">CLEAR</button>
 </div>
 
-<footer><span>USURE CODE PROTECTION</span><span>ALL SYSTEMS OPERATIONAL</span></footer>
+<div class="message" id="message" role="status"></div>
+
+<section class="info">
+<div class="info-card">
+<strong>01 / OBFUSCATION</strong>
+<span>Transforms the Lua source into an encoded runtime wrapper.</span>
 </div>
+<div class="info-card">
+<strong>02 / ENCRYPTION</strong>
+<span>Creator encrypts the submitted code and stores it in Firebase.</span>
+</div>
+<div class="info-card">
+<strong>03 / DELIVERY</strong>
+<span>Generates a compact loader that retrieves and executes the protected code.</span>
+</div>
+</section>
+</main>
+
+<footer>
+<span>USURE</span>
+<span>Lua Protection System</span>
+<span>2026</span>
+</footer>
 
 <script>
 "use strict";
 
 const CREATOR_URL="https://noisy-meadow-1f83.lvlyvcbcla.workers.dev/create";
-const ATTACHER_URL="https://bold-darkness-4fdd.lvlyvcbcla.workers.dev/activate";
-const ALPHABET="0123456789abcdefghijklmnopqrstuvwx";
-const encoder=new TextEncoder();
 
-const sourceEl=document.getElementById("source");
-const outputEl=document.getElementById("output");
-const generateBtn=document.getElementById("generate");
-const copyBtn=document.getElementById("copy");
-const downloadBtn=document.getElementById("download");
-const messageEl=document.getElementById("message");
-const progressEl=document.getElementById("progress");
+const source=document.getElementById("source");
+const output=document.getElementById("output");
+const generateButton=document.getElementById("generate");
+const copyButton=document.getElementById("copy");
+const clearButton=document.getElementById("clear");
+const message=document.getElementById("message");
+const sourceCount=document.getElementById("sourceCount");
+const outputCount=document.getElementById("outputCount");
+const connectionStatus=document.getElementById("connectionStatus");
 
-function showMessage(text,type){
-    messageEl.textContent=text;
-    messageEl.className=type;
-    messageEl.style.display="block";
+function updateCounts(){
+ sourceCount.textContent=source.value.length+" CHARS";
+ outputCount.textContent=output.value.length+" CHARS";
 }
 
-function clearMessage(){
-    messageEl.textContent="";
-    messageEl.className="";
-    messageEl.style.display="none";
+function setMessage(text,type=""){
+ message.textContent=text;
+ message.className="message"+(type?" "+type:"");
 }
 
-function randomInt(min,max){
-    return Math.floor(Math.random()*(max-min+1))+min;
+function randomName(){
+ const first="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ const rest=first+"0123456789";
+ const length=9+Math.floor(Math.random()*7);
+ let result=first[Math.floor(Math.random()*first.length)];
+
+ for(let i=1;i<length;i++){
+  result+=rest[Math.floor(Math.random()*rest.length)];
+ }
+
+ return result;
 }
 
-function randomKey(){
-    return randomInt(1,255);
+function obfuscateLua(code){
+ const bytes=new TextEncoder().encode(code);
+ const key=1+Math.floor(Math.random()*255);
+ const encoded=[];
+
+ for(let i=0;i<bytes.length;i++){
+  encoded.push((bytes[i]+key)%256);
+ }
+
+ const dataName=randomName();
+ const keyName=randomName();
+ const resultName=randomName();
+ const indexName=randomName();
+ const loadName=randomName();
+ const sourceName=randomName();
+
+ const chunks=[];
+
+ for(let i=0;i<encoded.length;i+=160){
+  chunks.push(encoded.slice(i,i+160).join(","));
+ }
+
+ const dataTable="{" + chunks.join(",") + "}";
+
+ return "local "+dataName+"="+dataTable+
+ ";local "+keyName+"="+key+
+ ";local "+resultName+"={}"+
+ ";for "+indexName+"=1,#"+dataName+" do "+
+ resultName+"["+indexName+"]=string.char(("+dataName+"["+indexName+"]-"+keyName+")%256)"+
+ " end"+
+ ";local "+sourceName+"=table.concat("+resultName+")"+
+ ";local "+loadName+"=loadstring or load"+
+ ";if not "+loadName+" then error('Loader unavailable') end"+
+ ";local "+randomName()+"="+loadName+"("+sourceName+")"+
+ ";if not "+randomName()+" then end";
 }
 
-function randomName(used){
-    const first="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const rest=first+"0123456789";
-    let name;
-    do{
-        name=first[randomInt(0,first.length-1)];
-        const length=randomInt(7,12);
-        for(let i=0;i<length;i++)name+=rest[randomInt(0,rest.length-1)];
-    }while(used.has(name));
-    used.add(name);
-    return name;
+async function requestProtectedCode(code){
+ const response=await fetch(CREATOR_URL,{
+  method:"POST",
+  headers:{
+   "Content-Type":"application/json"
+  },
+  body:JSON.stringify({
+   code:code
+  })
+ });
+
+ const text=await response.text();
+ let data;
+
+ try{
+  data=JSON.parse(text);
+ }catch{
+  throw new Error("Creator returned an invalid response (HTTP "+response.status+").");
+ }
+
+ if(!response.ok||!data.success){
+  const details=data.details||data.error||("HTTP "+response.status);
+  throw new Error(String(details));
+ }
+
+ if(typeof data.code!=="string"||!data.code.trim()){
+  throw new Error("Creator did not return a loader.");
+ }
+
+ return data.code.trim();
 }
 
-function xorByte(a,b){
-    let result=0,bit=1;
-    while(a>0||b>0){
-        if(a%2!==b%2)result+=bit;
-        a=Math.floor(a/2);
-        b=Math.floor(b/2);
-        bit*=2;
-    }
-    return result;
-}
+generateButton.addEventListener("click",async()=>{
+ const original=source.value;
 
-function encodeBase34(bytes,key){
-    let result="";
-    for(const byte of bytes){
-        const value=xorByte(byte,key);
-        result+=ALPHABET[Math.floor(value/34)]+ALPHABET[value%34];
-    }
-    return result;
-}
+ if(!original.trim()){
+  setMessage("Enter Lua source code first.","error");
+  source.focus();
+  return;
+ }
 
-function luaString(value){
-    return '"'+value.replace(/\\/g,"\\\\").replace(/"/g,'\\"').replace(/\n/g,"\\n").replace(/\r/g,"\\r")+'"';
-}
+ if(original.length>450000){
+  setMessage("Source code is too large.","error");
+  return;
+ }
 
-function shuffle(array){
-    for(let i=array.length-1;i>0;i--){
-        const j=randomInt(0,i);
-        [array[i],array[j]]=[array[j],array[i]];
-    }
-    return array;
-}
+ generateButton.disabled=true;
+ copyButton.disabled=true;
+ connectionStatus.textContent="PROCESSING";
+ setMessage("Obfuscating source and creating protected loader...");
 
-function makeLuaObfuscation(source){
-    const bytes=encoder.encode(source);
-    if(!bytes.length)throw new Error("Source code is empty.");
+ try{
+  const obfuscated=obfuscateLua(original);
+  const loader=await requestProtectedCode(obfuscated);
 
-    const key1=randomKey();
-    const key2=randomKey();
-    const layer1=encodeBase34(bytes,key1);
-    const layer2=encodeBase34(encoder.encode(layer1),key2);
-
-    const pairs=[];
-    for(let i=0;i<layer2.length;i+=2)pairs.push(layer2.slice(i,i+2));
-
-    const chunks=[];
-    let pos=0;
-    while(pos<pairs.length){
-        const count=randomInt(12,36);
-        chunks.push(pairs.slice(pos,pos+count).join(""));
-        pos+=count;
-    }
-
-    const shuffled=shuffle(chunks.map((value,index)=>({value,index})));
-    const order=Array(chunks.length);
-    shuffled.forEach((item,position)=>order[item.index]=position+1);
-
-    const used=new Set();
-    const n={};
-    for(const key of ["alpha","parts","order","encoded","bx","val","dec","str","key","out","i","a","b","p","num","src","fn","ok","err"]){
-        n[key]=randomName(used);
-    }
-
-    const entries=shuffled.map((item,index)=>"["+(index+1)+"]="+luaString(item.value)).join(",");
-    const orderEntries=order.join(",");
-
-    return [
-        "local "+n.alpha+"="+luaString(ALPHABET),
-        "local "+n.parts+"={"+entries+"}",
-        "local "+n.order+"={"+orderEntries+"}",
-        "local function "+n.bx+"("+n.a+","+n.b+")",
-        "local "+n.val+"=0;local "+n.p+"=1",
-        "while "+n.a+">0 or "+n.b+">0 do",
-        "if "+n.a+"%2~="+n.b+"%2 then "+n.val+"="+n.val+"+"+n.p+" end",
-        n.a+"=math.floor("+n.a+"/2);"+n.b+"=math.floor("+n.b+"/2);"+n.p+"="+n.p+"*2",
-        "end;return "+n.val,
-        "end",
-        "local function "+n.dec+"("+n.str+","+n.key+")",
-        "local "+n.out+"={};local "+n.num+"=1",
-        "for "+n.i+"=1,#"+n.str+",2 do",
-        "local function "+n.val+"("+n.a+")",
-        "local "+n.b+"=string.byte("+n.a+")",
-        "if "+n.b+">=48 and "+n.b+"<=57 then return "+n.b+"-48 end",
-        "return "+n.b+"-87",
-        "end",
-        "local "+n.a+"="+n.val+"(string.sub("+n.str+","+n.i+","+n.i+"))*34+"+n.val+"(string.sub("+n.str+","+n.i+"+1,"+n.i+"+1))",
-        n.out+"["+n.num+"]=string.char("+n.bx+"("+n.a+","+n.key+"));"+n.num+"="+n.num+"+1",
-        "end;return table.concat("+n.out+")",
-        "end",
-        "local "+n.encoded+"={}",
-        "for "+n.i+"=1,#"+n.order+" do "+n.encoded+"["+n.i+"]="+n.parts+"["+n.order+"["+n.i+"]] end",
-        "local "+n.str+"=table.concat("+n.encoded+")",
-        "local "+n.src+"="+n.dec+"("+n.dec+"("+n.str+","+key2+"),"+key1+")",
-        "local "+n.fn+"=loadstring("+n.src+")",
-        "if not "+n.fn+" then error('USURE compilation failed') end",
-        "local "+n.ok+","+n.err+"=pcall("+n.fn+")",
-        "if not "+n.ok+" then error("+n.err+") end"
-    ].join(";");
-}
-
-function makeLoader(token){
-    const used=new Set();
-    const n={};
-    for(const key of ["http","request","url","token","response","data","fn","status","ok","err"]){
-        n[key]=randomName(used);
-    }
-
-    function split(value,min,max){
-        const pieces=[];
-        for(let i=0;i<value.length;){
-            const size=randomInt(min,max);
-            pieces.push(value.slice(i,i+size));
-            i+=size;
-        }
-        return pieces;
-    }
-
-    function join(pieces){
-        return "table.concat({"+pieces.map(luaString).join(",")+"})";
-    }
-
-    return [
-        "local "+n.http+"=game:GetService('HttpService')",
-        "local "+n.request+"=request or http_request or (syn and syn.request)",
-        "if not "+n.request+" then error('USURE HTTP unavailable') end",
-        "local "+n.url+"="+join(split(ATTACHER_URL+"/activate",4,9)),
-        "local "+n.token+"="+join(split(token,5,11)),
-        "local "+n.response+"="+n.request+"({Url="+n.url+",Method='POST',Headers={['Content-Type']='application/json'},Body="+n.http+":JSONEncode({token="+n.token+"})})",
-        "local "+n.status+"="+n.response+" and ("+n.response+".StatusCode or "+n.response+".Status or "+n.response+".status_code)",
-        "if "+n.status+"~=200 then error('USURE activation failed: '..tostring("+n.status+")) end",
-        "local "+n.data+"="+n.http+":JSONDecode("+n.response+".Body or "+n.response+".body)",
-        "if not "+n.data+" or not "+n.data+".success or type("+n.data+".code)~='string' then error('USURE invalid response: '..tostring("+n.data+" and "+n.data+".error)) end",
-        "local "+n.fn+"=loadstring("+n.data+".code)",
-        "if not "+n.fn+" then error('USURE compilation failed') end",
-        "local "+n.ok+","+n.err+"=pcall("+n.fn+")",
-        "if not "+n.ok+" then error("+n.err+") end"
-    ].join(";");
-}
-
-async function createProtectedCode(source){
-    const obfuscated=makeLuaObfuscation(source);
-    const response=await fetch(CREATOR_URL,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({code:obfuscated})
-    });
-
-    const text=await response.text();
-    let data;
-
-    try{
-        data=JSON.parse(text);
-    }catch{
-        throw new Error("Creator returned invalid JSON. HTTP "+response.status);
-    }
-
-    if(!response.ok||!data.success||!data.token){
-        throw new Error((data.error||"Creator error")+(data.details?": "+data.details:""));
-    }
-
-    return makeLoader(data.token);
-}
-
-sourceEl.addEventListener("input",()=>{
-    document.getElementById("sourceCount").textContent=sourceEl.value.length.toLocaleString()+" CHARACTERS";
+  output.value=loader.replace(/\s+/g," ");
+  updateCounts();
+  setMessage("Protection completed successfully.","success");
+  connectionStatus.textContent="SYSTEM READY";
+ }catch(error){
+  setMessage("Generation failed: "+(error.message||String(error)),"error");
+  connectionStatus.textContent="REQUEST FAILED";
+ }finally{
+  generateButton.disabled=false;
+  copyButton.disabled=false;
+ }
 });
 
-generateBtn.addEventListener("click",async()=>{
-    clearMessage();
+copyButton.addEventListener("click",async()=>{
+ if(!output.value){
+  setMessage("There is no output to copy.","error");
+  return;
+ }
 
-    if(!sourceEl.value.trim()){
-        showMessage("Enter Lua source code first.","error");
-        sourceEl.focus();
-        return;
-    }
+ try{
+  await navigator.clipboard.writeText(output.value);
+  setMessage("Output copied to clipboard.","success");
+ }catch{
+  output.focus();
+  output.select();
 
-    generateBtn.disabled=true;
-    copyBtn.disabled=true;
-    downloadBtn.disabled=true;
-    outputEl.value="";
-    progressEl.textContent="PROCESSING";
-
-    try{
-        const result=await createProtectedCode(sourceEl.value);
-        outputEl.value=result;
-        document.getElementById("outputCount").textContent=result.length.toLocaleString()+" CHARACTERS";
-        copyBtn.disabled=false;
-        downloadBtn.disabled=false;
-        progressEl.textContent="COMPLETE";
-        showMessage("Protected code generated successfully.","success");
-    }catch(error){
-        progressEl.textContent="FAILED";
-        showMessage(String(error.message||error),"error");
-    }finally{
-        generateBtn.disabled=false;
-    }
+  try{
+   const copied=document.execCommand("copy");
+   setMessage(copied?"Output copied to clipboard.":"Select the output and copy it manually.",copied?"success":"error");
+  }catch{
+   setMessage("Select the output and copy it manually.","error");
+  }
+ }
 });
 
-copyBtn.addEventListener("click",async()=>{
-    if(!outputEl.value)return;
-    try{
-        await navigator.clipboard.writeText(outputEl.value);
-    }catch{
-        outputEl.focus();
-        outputEl.select();
-        document.execCommand("copy");
-    }
-    copyBtn.textContent="COPIED";
-    setTimeout(()=>copyBtn.textContent="COPY CODE",1200);
+clearButton.addEventListener("click",()=>{
+ source.value="";
+ output.value="";
+ updateCounts();
+ setMessage("");
+ connectionStatus.textContent="SYSTEM READY";
+ source.focus();
 });
 
-downloadBtn.addEventListener("click",()=>{
-    const blob=new Blob([outputEl.value],{type:"text/plain;charset=utf-8"});
-    const link=document.createElement("a");
-    link.href=URL.createObjectURL(blob);
-    link.download="usure_protected.lua";
-    link.click();
-    URL.revokeObjectURL(link.href);
-});
+source.addEventListener("input",updateCounts);
+output.addEventListener("input",updateCounts);
 
-document.getElementById("clear").addEventListener("click",()=>{
-    sourceEl.value="";
-    outputEl.value="";
-    document.getElementById("sourceCount").textContent="0 CHARACTERS";
-    document.getElementById("outputCount").textContent="0 CHARACTERS";
-    progressEl.textContent="READY";
-    copyBtn.disabled=true;
-    downloadBtn.disabled=true;
-    clearMessage();
-});
+updateCounts();
 </script>
 </body>
 </html>
