@@ -2,254 +2,243 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>USURE Obfuscator</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+html,body{
+    margin:0;
+    min-height:100%;
+    background:#050505;
+    color:#eee;
+    font-family:Arial,Helvetica,sans-serif
 }
 
-html,
-body {
-    margin: 0;
-    width: 100%;
-    min-height: 100%;
-    background: #070707;
-    color: #eeeeee;
-    font-family: Arial, Helvetica, sans-serif;
+body{
+    padding:35px 18px
 }
 
-body {
-    padding: 40px 20px;
+.container{
+    width:min(1150px,100%);
+    margin:auto
 }
 
-.container {
-    width: min(1100px, 100%);
-    margin: 0 auto;
+.header{
+    margin-bottom:24px
 }
 
-.header {
-    margin-bottom: 30px;
+.logo{
+    font-size:30px;
+    font-weight:800;
+    letter-spacing:5px
 }
 
-.logo {
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: 5px;
+.sub{
+    margin-top:7px;
+    color:#666;
+    font-size:11px;
+    letter-spacing:2px
 }
 
-.subtitle {
-    margin-top: 8px;
-    color: #777777;
-    font-size: 13px;
-    letter-spacing: 1px;
+.panel{
+    background:#0b0b0b;
+    border:1px solid #202020;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 20px 60px rgba(0,0,0,.4)
 }
 
-.panel {
-    background: #0d0d0d;
-    border: 1px solid #202020;
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 15px 50px rgba(0,0,0,.35);
+.label{
+    display:block;
+    margin-bottom:9px;
+    color:#777;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px
 }
 
-.label {
-    display: block;
-    margin-bottom: 10px;
-    color: #a0a0a0;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+textarea{
+    display:block;
+    width:100%;
+    min-height:430px;
+    resize:vertical;
+    padding:16px;
+    border:1px solid #222;
+    border-radius:9px;
+    outline:none;
+    background:#070707;
+    color:#eee;
+    font-family:Consolas,Monaco,monospace;
+    font-size:13px;
+    line-height:1.55
 }
 
-textarea {
-    width: 100%;
-    min-height: 430px;
-    resize: vertical;
-    border: 1px solid #242424;
-    border-radius: 9px;
-    outline: none;
-    padding: 18px;
-    background: #080808;
-    color: #eeeeee;
-    font-family: Consolas, Monaco, monospace;
-    font-size: 14px;
-    line-height: 1.55;
-    transition: .2s;
+textarea:focus{
+    border-color:#3a3a3a
 }
 
-textarea:focus {
-    border-color: #444444;
-    box-shadow: 0 0 0 2px rgba(255,255,255,.025);
+.actions{
+    display:flex;
+    gap:9px;
+    margin-top:12px
 }
 
-.actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 14px;
+button{
+    padding:11px 19px;
+    border:1px solid #303030;
+    border-radius:8px;
+    background:#151515;
+    color:#eee;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.15s
 }
 
-button {
-    border: 1px solid #303030;
-    border-radius: 8px;
-    padding: 12px 20px;
-    background: #151515;
-    color: #eeeeee;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: .18s;
+button:hover{
+    background:#202020;
+    border-color:#444
 }
 
-button:hover {
-    background: #202020;
-    border-color: #444444;
+button:active{
+    transform:scale(.98)
 }
 
-button:active {
-    transform: scale(.98);
+.primary{
+    background:#eee;
+    color:#050505;
+    border-color:#eee
 }
 
-.primary {
-    background: #eeeeee;
-    color: #080808;
-    border-color: #eeeeee;
+.primary:hover{
+    background:#d4d4d4;
+    border-color:#d4d4d4
 }
 
-.primary:hover {
-    background: #d5d5d5;
-    border-color: #d5d5d5;
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed
 }
 
-button:disabled {
-    opacity: .5;
-    cursor: not-allowed;
+.status{
+    display:none;
+    margin-top:12px;
+    padding:11px 13px;
+    border:1px solid #222;
+    border-radius:8px;
+    background:#0e0e0e;
+    color:#888;
+    font-size:12px
 }
 
-.status {
-    display: none;
-    margin-top: 15px;
-    padding: 12px 14px;
-    border: 1px solid #242424;
-    border-radius: 8px;
-    background: #101010;
-    color: #9d9d9d;
-    font-size: 13px;
+.status.show{
+    display:block
 }
 
-.status.show {
-    display: block;
+.status.error{
+    color:#ff7777;
+    border-color:#3a1b1b;
+    background:#120909
 }
 
-.status.success {
-    color: #cfcfcf;
+.status.success{
+    color:#bdbdbd
 }
 
-.status.error {
-    color: #ff8585;
-    border-color: #402020;
-    background: #140b0b;
+.output{
+    display:none;
+    margin-top:20px
 }
 
-.output {
-    display: none;
-    margin-top: 20px;
+.output.show{
+    display:block
 }
 
-.output.show {
-    display: block;
+.outputHeader{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:9px
 }
 
-.output textarea {
-    min-height: 300px;
+.outputTitle{
+    color:#777;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1.5px
 }
 
-.output-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
+.copy{
+    padding:8px 13px;
+    font-size:11px
 }
 
-.output-title {
-    color: #a0a0a0;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+.output textarea{
+    min-height:260px;
+    white-space:pre;
+    overflow:auto
 }
 
-.copy {
-    padding: 8px 14px;
-    font-size: 12px;
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:9px;
+    margin-top:16px
 }
 
-.info {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+.stat{
+    background:#090909;
+    border:1px solid #1b1b1b;
+    border-radius:8px;
+    padding:12px
 }
 
-.info-box {
-    padding: 14px;
-    border: 1px solid #1d1d1d;
-    border-radius: 8px;
-    background: #0a0a0a;
+.statTitle{
+    color:#555;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:1px
 }
 
-.info-title {
-    color: #666666;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+.statValue{
+    margin-top:5px;
+    color:#ccc;
+    font-size:12px
 }
 
-.info-value {
-    margin-top: 6px;
-    color: #d8d8d8;
-    font-size: 13px;
+.footer{
+    margin-top:18px;
+    text-align:center;
+    color:#393939;
+    font-size:10px;
+    letter-spacing:1px
 }
 
-.footer {
-    margin-top: 20px;
-    text-align: center;
-    color: #444444;
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-@media (max-width: 700px) {
-    body {
-        padding: 20px 12px;
+@media(max-width:700px){
+    body{
+        padding:20px 10px
     }
 
-    .panel {
-        padding: 14px;
+    .panel{
+        padding:13px
     }
 
-    .logo {
-        font-size: 24px;
+    .actions{
+        flex-direction:column
     }
 
-    .info {
-        grid-template-columns: 1fr;
+    button{
+        width:100%
     }
 
-    .actions {
-        flex-direction: column;
+    .stats{
+        grid-template-columns:1fr 1fr
     }
 
-    button {
-        width: 100%;
-    }
-
-    textarea {
-        min-height: 350px;
+    textarea{
+        min-height:350px
     }
 }
 </style>
@@ -261,7 +250,7 @@ button:disabled {
 
     <div class="header">
         <div class="logo">USURE</div>
-        <div class="subtitle">SECURE SCRIPT DELIVERY SYSTEM</div>
+        <div class="sub">SECURE SCRIPT DELIVERY SYSTEM</div>
     </div>
 
     <div class="panel">
@@ -275,10 +264,11 @@ button:disabled {
         ></textarea>
 
         <div class="actions">
+
             <button
-                class="primary"
                 id="generate"
-                onclick="generateScript()"
+                class="primary"
+                onclick="generate()"
             >
                 GENERATE
             </button>
@@ -286,22 +276,17 @@ button:disabled {
             <button onclick="clearAll()">
                 CLEAR
             </button>
+
         </div>
 
-        <div
-            id="status"
-            class="status"
-        ></div>
+        <div id="status" class="status"></div>
 
-        <div
-            id="output"
-            class="output"
-        >
+        <div id="output" class="output">
 
-            <div class="output-head">
+            <div class="outputHeader">
 
-                <div class="output-title">
-                    Generated LocalScript
+                <div class="outputTitle">
+                    GENERATED SCRIPT
                 </div>
 
                 <button
@@ -321,35 +306,41 @@ button:disabled {
 
         </div>
 
-        <div class="info">
+        <div class="stats">
 
-            <div class="info-box">
-                <div class="info-title">
-                    Creator
+            <div class="stat">
+                <div class="statTitle">
+                    ENCODING
                 </div>
-
-                <div class="info-value">
-                    Worker #1
-                </div>
-            </div>
-
-            <div class="info-box">
-                <div class="info-title">
-                    Delivery
-                </div>
-
-                <div class="info-value">
-                    Worker #2
+                <div class="statValue">
+                    BASE34 × 2
                 </div>
             </div>
 
-            <div class="info-box">
-                <div class="info-title">
-                    Storage
+            <div class="stat">
+                <div class="statTitle">
+                    TRANSFORM
                 </div>
+                <div class="statValue">
+                    XOR × 2
+                </div>
+            </div>
 
-                <div class="info-value">
-                    Firebase
+            <div class="stat">
+                <div class="statTitle">
+                    SPLITTING
+                </div>
+                <div class="statValue">
+                    RANDOM
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="statTitle">
+                    OUTPUT
+                </div>
+                <div class="statValue">
+                    ONE LINE
                 </div>
             </div>
 
@@ -371,24 +362,596 @@ const CREATOR_WORKER =
 const ATTACHER_WORKER =
     "https://bold-darkness-4fdd.lvlyvcbcla.workers.dev";
 
-async function generateScript() {
+const BASE34 =
+    "0123456789abcdefghijklmnopqrstuvwx";
 
-    const source =
-        document.getElementById("source").value;
+function randomInt(min,max){
+    return Math.floor(
+        Math.random()*(max-min+1)
+    )+min;
+}
 
-    const status =
+function randomIdentifier(){
+    const first =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    const rest =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    let result =
+        first[randomInt(0,first.length-1)];
+
+    const length =
+        randomInt(5,11);
+
+    for(let i=1;i<length;i++){
+        result +=
+            rest[randomInt(0,rest.length-1)];
+    }
+
+    return result;
+}
+
+function uniqueIdentifiers(count){
+    const set=new Set();
+
+    while(set.size<count){
+        set.add(randomIdentifier());
+    }
+
+    return Array.from(set);
+}
+
+function base34EncodeByte(value){
+    return (
+        BASE34[Math.floor(value/34)] +
+        BASE34[value%34]
+    );
+}
+
+function encodeLayer(bytes,key){
+
+    let output="";
+
+    for(let i=0;i<bytes.length;i++){
+
+        const value =
+            bytes[i]^key;
+
+        output +=
+            base34EncodeByte(value);
+    }
+
+    return output;
+}
+
+function shuffle(array){
+
+    const result=array.slice();
+
+    for(let i=result.length-1;i>0;i--){
+
+        const j=
+            randomInt(0,i);
+
+        const temp=result[i];
+
+        result[i]=result[j];
+        result[j]=temp;
+    }
+
+    return result;
+}
+
+function bytesFromString(text){
+
+    return Array.from(
+        new TextEncoder().encode(text)
+    );
+}
+
+function buildObfuscatedLua(source){
+
+    const key1 =
+        randomInt(1,255);
+
+    const key2 =
+        randomInt(1,255);
+
+    const originalBytes =
+        bytesFromString(source);
+
+    const layer1 =
+        encodeLayer(
+            originalBytes,
+            key1
+        );
+
+    const layer1Bytes =
+        Array.from(
+            new TextEncoder().encode(layer1)
+        );
+
+    const layer2 =
+        encodeLayer(
+            layer1Bytes,
+            key2
+        );
+
+    const chunkSizeMin=24;
+    const chunkSizeMax=72;
+
+    const chunks=[];
+
+    let position=0;
+
+    while(position<layer2.length){
+
+        const size=
+            randomInt(
+                chunkSizeMin,
+                chunkSizeMax
+            );
+
+        chunks.push(
+            layer2.slice(
+                position,
+                position+size
+            )
+        );
+
+        position += size;
+    }
+
+    const indexes =
+        chunks.map(
+            (_,i)=>i+1
+        );
+
+    const shuffledIndexes =
+        shuffle(indexes);
+
+    const names =
+        uniqueIdentifiers(10);
+
+    const alphabetName=names[0];
+    const partsName=names[1];
+    const orderName=names[2];
+    const encodedName=names[3];
+    const decodeName=names[4];
+    const firstName=names[5];
+    const secondName=names[6];
+    const byteName=names[7];
+    const resultName=names[8];
+    const funcName=names[9];
+
+    let lua="";
+
+    lua+="local "+
+        alphabetName+
+        '="'+
+        BASE34+
+        '";';
+
+    lua+="local "+
+        firstName+
+        "="+
+        key1+
+        ";";
+
+    lua+="local "+
+        secondName+
+        "="+
+        key2+
+        ";";
+
+    lua+="local "+
+        partsName+
+        "={};";
+
+    for(let i=0;i<shuffledIndexes.length;i++){
+
+        const originalIndex =
+            shuffledIndexes[i];
+
+        const chunk =
+            chunks[originalIndex-1];
+
+        const fakePosition =
+            originalIndex;
+
+        lua+=
+            partsName+
+            "["+
+            fakePosition+
+            "]="+
+            JSON.stringify(chunk)+
+            ";";
+    }
+
+    lua+="local "+
+        orderName+
+        "={";
+
+    for(let i=0;i<indexes.length;i++){
+
+        lua+=
+            indexes[i];
+
+        if(i<indexes.length-1){
+            lua+=",";
+        }
+    }
+
+    lua+="};";
+
+    lua+="local "+
+        encodedName+
+        '="";';
+
+    lua+="for "+
+        firstName+
+        "=1,#"+
+        orderName+
+        " do "+
+        encodedName+
+        "="
+        +encodedName+
+        "+"
+        +partsName+
+        "["
+        +orderName+
+        "["
+        +firstName+
+        "]];"
+        +"end;";
+
+    lua+="local "+
+        decodeName+
+        "=function("+
+        byteName+
+        ","+
+        resultName+
+        ")";
+
+    lua+="local "+
+        funcName+
+        "=\"\";";
+
+    lua+="for "+
+        firstName+
+        "=1,#"+
+        byteName+
+        ",2 do";
+
+    lua+="local "+
+        secondName+
+        "=string.byte("+
+        byteName+
+        ","
+        +firstName+
+        ");";
+
+    lua+="local "+
+        resultName+
+        "=string.byte("+
+        byteName+
+        ","
+        +firstName+
+        "+1);";
+
+    lua+="local "+
+        alphabetName+
+        "=string.byte("+
+        byteName+
+        ","
+        +firstName+
+        ");";
+
+    lua+="local "+
+        byteName+
+        "=string.byte("+
+        byteName+
+        ","
+        +firstName+
+        ");";
+
+    lua+="local "+
+        funcName+
+        "=0;";
+
+    lua+="if "+
+        byteName+
+        ">=48 and "+
+        byteName+
+        "<=57 then ";
+
+    lua+=
+        funcName+
+        "="+
+        byteName+
+        "-48;";
+
+    lua+="else ";
+
+    lua+=
+        funcName+
+        "="+
+        byteName+
+        "-87;";
+
+    lua+="end;";
+
+    lua+="local "+
+        byteName+
+        "=string.byte("+
+        byteName+
+        ","
+        +firstName+
+        "+1);";
+
+    lua+="local "+
+        alphabetName+
+        "=0;";
+
+    lua+="if "+
+        byteName+
+        ">=48 and "+
+        byteName+
+        "<=57 then ";
+
+    lua+=
+        alphabetName+
+        "="+
+        byteName+
+        "-48;";
+
+    lua+="else ";
+
+    lua+=
+        alphabetName+
+        "="+
+        byteName+
+        "-87;";
+
+    lua+="end;";
+
+    lua+=
+        resultName+
+        "="+
+        resultName+
+        "..string.char(( "+
+        funcName+
+        "*34+"+
+        alphabetName+
+        ")%256);";
+
+    lua+="end;";
+
+    lua+="return "+
+        resultName+
+        ";";
+
+    lua+="end;";
+
+    lua+="local "+
+        byteName+
+        "="+
+        decodeName+
+        "("+
+        encodedName+
+        ","+
+        firstName+
+        ");";
+
+    lua+="local "+
+        resultName+
+        "=decodeLayer2;";
+
+    lua+="local "+
+        alphabetName+
+        "=function("+
+        byteName+
+        ","+
+        firstName+
+        ")";
+
+    lua+="local "+
+        resultName+
+        '="";';
+
+    lua+="for "+
+        secondName+
+        "=1,#"+
+        byteName+
+        ",2 do";
+
+    lua+="local "+
+        funcName+
+        "=string.byte("+
+        byteName+
+        ","
+        +secondName+
+        ");";
+
+    lua+="local "+
+        encodedName+
+        "=string.byte("+
+        byteName+
+        ","
+        +secondName+
+        "+1);";
+
+    lua+="local "+
+        partsName+
+        "=funcName;";
+
+    lua+="local "+
+        orderName+
+        "=encodedName;";
+
+    lua+="if "+
+        partsName+
+        ">=48 and "+
+        partsName+
+        "<=57 then ";
+
+    lua+=
+        partsName+
+        "="+
+        partsName+
+        "-48;";
+
+    lua+="else ";
+
+    lua+=
+        partsName+
+        "="+
+        partsName+
+        "-87;";
+
+    lua+="end;";
+
+    lua+="if "+
+        orderName+
+        ">=48 and "+
+        orderName+
+        "<=57 then ";
+
+    lua+=
+        orderName+
+        "="
+        +orderName+
+        "-48;";
+
+    lua+="else ";
+
+    lua+=
+        orderName+
+        "="
+        +orderName+
+        "-87;";
+
+    lua+="end;";
+
+    lua+=
+        resultName+
+        "="
+        +resultName+
+        "..string.char((("
+        +partsName+
+        "*34+"
+        +orderName+
+        ")%256)^"
+        +firstName+
+        ");";
+
+    lua+="end;";
+
+    lua+="return "+
+        resultName+
+        ";";
+
+    lua+="end;";
+
+    lua+="local "+
+        funcName+
+        "="+
+        alphabetName+
+        "("+
+        byteName+
+        ","+
+        secondName+
+        ");";
+
+    lua+="local "+
+        resultName+
+        "={};";
+
+    lua+="for "+
+        firstName+
+        "=1,#"+
+        funcName+
+        " do ";
+
+    lua+="local "+
+        alphabetName+
+        "=string.byte("+
+        funcName+
+        ","
+        +firstName+
+        ")^"+
+        firstName+
+        ";";
+
+    lua+=
+        resultName+
+        "[#"+
+        resultName+
+        "+1]=string.char("+
+        alphabetName+
+        ");";
+
+    lua+="end;";
+
+    lua+="local "+
+        byteName+
+        "=table.concat("+
+        resultName+
+        ");";
+
+    lua+="local "+
+        firstName+
+        "=loadstring("+
+        byteName+
+        ");";
+
+    lua+="if "+
+        firstName+
+        " then ";
+
+    lua+="pcall("+
+        firstName+
+        ");";
+
+    lua+="end;";
+
+    return lua;
+}
+
+function showStatus(text,error=false,success=false){
+
+    const status=
         document.getElementById("status");
 
-    const result =
+    status.textContent=text;
+
+    status.className="status show";
+
+    if(error){
+        status.classList.add("error");
+    }
+
+    if(success){
+        status.classList.add("success");
+    }
+}
+
+async function generate(){
+
+    const source=
+        document.getElementById("source").value;
+
+    const result=
         document.getElementById("result");
 
-    const output =
+    const output=
         document.getElementById("output");
 
-    const button =
+    const button=
         document.getElementById("generate");
 
-    if (!source.trim()) {
+    if(!source.trim()){
 
         showStatus(
             "Вставьте Lua код.",
@@ -398,157 +961,146 @@ async function generateScript() {
         return;
     }
 
-    button.disabled = true;
+    button.disabled=true;
 
-    button.textContent = "GENERATING...";
+    button.textContent="GENERATING...";
 
     output.classList.remove("show");
 
-    showStatus(
-        "Создание защищённого скрипта...",
-        false
-    );
+    try{
 
-    try {
-
-        const response = await fetch(
-            CREATOR_WORKER + "/create",
-            {
-                method: "POST",
-
-                headers: {
-                    "Content-Type": "application/json"
-                },
-
-                body: JSON.stringify({
-                    code: source
-                })
-            }
+        showStatus(
+            "Обфускация...",
+            false,
+            false
         );
+
+        const obfuscated=
+            buildObfuscatedLua(source);
+
+        showStatus(
+            "Сохранение...",
+            false,
+            false
+        );
+
+        const response=
+            await fetch(
+                CREATOR_WORKER+"/create",
+                {
+                    method:"POST",
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+                    body:JSON.stringify({
+                        code:obfuscated
+                    })
+                }
+            );
 
         let data;
 
-        try {
-            data = await response.json();
-        } catch {
+        try{
+            data=await response.json();
+        }catch{
             throw new Error(
                 "Worker вернул некорректный ответ."
             );
         }
 
-        if (!response.ok || !data.success) {
-
+        if(
+            !response.ok ||
+            !data.success
+        ){
             throw new Error(
                 data.error ||
                 data.details ||
-                "Worker error " + response.status
+                "Worker error "+response.status
             );
         }
 
-        if (!data.code) {
+        if(!data.code){
             throw new Error(
                 "Worker не вернул LocalScript."
             );
         }
 
-        result.value = data.code;
+        result.value=
+            data.code;
 
         output.classList.add("show");
 
         showStatus(
-            "Готово. LocalScript создан.",
+            "Готово. Скрипт создан.",
             false,
             true
         );
 
-    } catch (error) {
+    }catch(error){
 
         console.error(error);
 
         showStatus(
             error.message ||
-            "Ошибка соединения с Worker.",
+            "Ошибка генерации.",
             true
         );
 
-    } finally {
+    }finally{
 
-        button.disabled = false;
+        button.disabled=false;
 
-        button.textContent = "GENERATE";
+        button.textContent="GENERATE";
     }
 }
 
-function showStatus(
-    message,
-    error = false,
-    success = false
-) {
+async function copyResult(){
 
-    const status =
-        document.getElementById("status");
-
-    status.textContent = message;
-
-    status.classList.add("show");
-
-    status.classList.toggle(
-        "error",
-        error
-    );
-
-    status.classList.toggle(
-        "success",
-        success
-    );
-}
-
-async function copyResult() {
-
-    const result =
+    const result=
         document.getElementById("result");
 
-    if (!result.value) {
+    if(!result.value){
         return;
     }
 
-    try {
+    try{
 
         await navigator.clipboard.writeText(
             result.value
         );
 
         showStatus(
-            "LocalScript скопирован.",
+            "Скопировано.",
             false,
             true
         );
 
-    } catch {
+    }catch{
 
         result.select();
 
         document.execCommand("copy");
 
         showStatus(
-            "LocalScript скопирован.",
+            "Скопировано.",
             false,
             true
         );
     }
 }
 
-function clearAll() {
+function clearAll(){
 
-    document.getElementById("source").value = "";
+    document.getElementById("source").value="";
 
-    document.getElementById("result").value = "";
+    document.getElementById("result").value="";
 
     document.getElementById("output")
         .classList.remove("show");
 
     document.getElementById("status")
-        .classList.remove("show");
+        .className="status";
 }
 
 </script>
